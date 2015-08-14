@@ -14,37 +14,37 @@
         >
 
         <LinearLayout
-        android:layout_width="fill_parent"
-        android:layout_height="0dp"
-        android:layout_weight="1"
+            android:layout_width="fill_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1"
             android:orientation="vertical"
-           >
+            >
 
 
-        <TextView android:text="标题"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:layout_marginTop="50dp" />
+            <TextView android:text="标题"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_marginTop="50dp" />
 
         </LinearLayout>
 
 
 
         <LinearLayout
-        android:layout_width="fill_parent"
-        android:layout_height="0dp"
-        android:layout_weight="2"
+            android:layout_width="fill_parent"
+            android:layout_height="0dp"
+            android:layout_weight="2"
             android:background="#ffffff"
             android:orientation="vertical"
-        >
+            >
 
 
-        <TextView android:text="内容"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:layout_marginTop="50dp" />
+            <TextView android:text="内容"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_marginTop="50dp" />
 
 
 
@@ -52,23 +52,24 @@
 
     </LinearLayout>
 
-    <TextView
-        android:layout_width="41dp"
-        android:layout_height="43dp"
-        android:background="@drawable/textview"
-        android:text=" "
-        android:textSize="18sp"
-        android:textColor="#cfcfcf"
-        android:layout_marginTop="135dp"
-        android:layout_marginLeft="260dp"
-        android:id="@+id/text_btn" />
+
     <LinearLayout
-        android:layout_width="fill_parent"
-        android:layout_height="fill_parent"
-        android:background="#ED645A"
-        android:visibility="gone"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        android:background="@drawable/textview"
+        android:layout_marginTop="120dp"
+        android:layout_marginLeft="220dp"
         android:id="@+id/m_linearlayout">
 
     </LinearLayout>
+    <ImageView
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        android:id="@+id/img_walk"
+        android:background="@drawable/walk"
+        android:layout_marginTop="120dp"
+        android:layout_marginLeft="220dp"
+        android:layout_marginRight="4dp"
+        android:layout_marginBottom="3dp" />
 
 </FrameLayout>
