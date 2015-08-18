@@ -19,7 +19,7 @@
 				
 		return matcher;
 	}
-	
+	v 
 	//		ÎÄÕÂ´ó×Ö¶Î
     //		zhengze = "class=\"article\">(.*?)</div";
 	
