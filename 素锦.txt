@@ -1,0 +1,51 @@
+	pattern = Pattern.compile("post\">        <a data-id=\"(.*?)\" href=\"(.*?)\" title=\"(.*?)\">        <img width=\"680\" height=\"440\" src=\"(.*?)\" class=\"cover\" />    </a>    <div class=\"else\">        <p>(.*?)</p>        <h3><a data-id=\"(.*?)\" class=\"posttitle\" href=\"(.*?)\">(.*?)</a></h3>        <p>(.*?)</p>        <p class=\"here\">            <span class=\"icon-letter\">(.*?)</span>            <span class=\"icon-view\">(.*?)</span>            <a href=\"javascript:;\" class=\"likeThis\" id=\"(.*?)\"><span class=\"icon-like\"></span><span class=\"count\">(.*?)</span></a>        </p>    </div");
+	// 上面的是文章列表的正则
+		pattern = Pattern.compile("post\">        <a data-id=\"1(.*?)\" href=\"2(.*?)\" title=\"3(.*?)\">        <img width=\"680\" height=\"440\" src=\"4(.*?)\" class=\"cover\" />    </a>    <div class=\"else\">        <p>5(.*?)</p>        <h3><a data-id=\"6(.*?)\" class=\"posttitle\" href=\"7(.*?)\">8(.*?)</a></h3>        <p>9(.*?)</p>        <p class=\"here\">            <span class=\"icon-letter\">10(.*?)</span>            <span class=\"icon-view\">11(.*?)</span>            <a href=\"javascript:;\" class=\"likeThis\" id=\"12(.*?)\"><span class=\"icon-like\"></span><span class=\"count\">13(.*?)</span></a>        </p>    </div");
+	// 下面是正则序号标识的内容
+	// 1    2    3           4          5        6      7     8         9        10        11          12      13
+	// ID   URL  文章名字    文章配图   日期     ID     URL   文章名字  文章内容 文章长度  文章浏览    喜欢ID  喜欢人数
+	   http://guo.lu/page/1  
+	// 文章列表的网址格式   "http://guo.lu/page/"+page 
+	
+	
+	文章详情页面
+	正则方法
+	public static Matcher gettext(String pattern , String 要正则的数据) {
+		String Result = "";
+		String 要正则的数据1 = 要正则的数据;
+		Pattern pattern1 = Pattern.compile(pattern);
+		Matcher matcher = pattern1.matcher(要正则的数据1);
+		matcher = pattern1.matcher(要正则的数据1);
+				
+		return matcher;
+	}
+	
+	//		文章大字段
+    //		zhengze = "class=\"article\">(.*?)</div";
+	
+//		文章名字
+//		zhengze = "<h1 class=\"title\">(.*?)</h1>";
+//		文章內容
+//		zhengze = "ent\">		    <p>(.*?)</p><bloc";
+//		BGM的鏈接
+//		zhengze = "g\" src=\"(.*?)\"";
+
+		m = gettext(zhengze,result);
+		while (m.find()) {
+			result = m.group(1);
+			System.out.println(result);
+		}
+
+//		作者以及BGM名字
+//		zhengze = "</p><blockquote><p>(.*?)<br />(.*?)</p></blockquote><p>&nbsp;<br />";
+//		m = gettext(zhengze,result);
+//		while (m.find()) {
+//			result = m.group(1);
+//			System.out.println(result);
+//			result = m.group(2);
+//			System.out.println(result);
+//		}
+	
+	
+	
+	
