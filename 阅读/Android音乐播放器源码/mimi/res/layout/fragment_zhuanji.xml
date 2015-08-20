@@ -1,0 +1,18 @@
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="com.example.mimi.fragment.Fragment_zhuanji">
+
+    <ListView 
+	    android:id="@+id/listview_zhuanji"
+	    android:layout_width="match_parent"
+	    android:layout_height="match_parent"
+	    android:cacheColorHint="@color/transparent"
+	    android:divider="@color/main_list_divider_bg"
+        android:dividerHeight="0.5dip"
+        android:listSelector="@drawable/list_selector"
+        android:scrollbarThumbVertical="@drawable/scrollbar_thumb"
+        android:layoutAnimation="@anim/anticipate_listview"
+	    ></ListView>
+</FrameLayout>

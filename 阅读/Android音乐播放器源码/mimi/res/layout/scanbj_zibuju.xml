@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical" >
+
+    <RelativeLayout
+        android:layout_width="80dp"
+        android:layout_height="50dp" >
+
+        <ImageView
+            android:id="@+id/scan_btn_scan"
+            android:layout_width="80dp"
+            android:layout_height="40dp"
+            android:layout_alignParentLeft="true"
+            android:layout_centerVertical="true"
+            android:background="@drawable/img_daily_hot_mv_tag1"
+            android:gravity="center"
+            android:singleLine="true"
+            />
+
+		<TextView
+		    android:id="@+id/scan_text_scan"
+		    android:layout_width="wrap_content"
+		    android:layout_height="wrap_content"
+		    android:layout_centerHorizontal="true"
+		    android:layout_centerVertical="true"
+		    android:text="简约"
+		    android:textColor="@color/white"
+		    android:textSize="20.0sp" />
+
+    </RelativeLayout>
+
+</LinearLayout>
