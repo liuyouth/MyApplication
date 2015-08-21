@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="utf-8"?>
+<selector xmlns:android="
+ 
+    <item android:state_focused="false">
+        <shape>
+            <solid android:color="@color/find_passwordbar_bg"/>
+            <stroke android:width="0.5dp" android:color="#C8C8C8"/>
+        </shape>
+    </item>
+     
+    <item android:state_focused="true">
+        <shape>
+            <solid android:color="@color/find_passwordbar_bg"/>
+            <stroke android:width="0.5dp" android:color="@color/main_color"/>
+        </shape>
+    </item>
+ 
+</selector>
+ 各个属性的介绍
+
+solid：实心，就是填充的意思
+android:color指定填充的颜色
+ 
+gradient：渐变
+android:startColor和android:endColor分别为起始和结束颜色，ndroid:angle是渐变角度，必须为45的整数倍。
+另外渐变默认的模式为android:type="linear"，即线性渐变，可以指定渐变为径向渐变，android:type="radial"，径向渐变需要指定半径android:gradientRadius="50"。
+ 
+stroke：描边
+android:width="2dp" 描边的宽度，android:color 描边的颜色。
+我们还可以把描边弄成虚线的形式，设置方式为：
+android:dashWidth="5dp" 
+android:dashGap="3dp"
+其中android:dashWidth表示'-'这样一个横线的宽度，android:dashGap表示之间隔开的距离。
+ 
+corners：圆角
+android:radius为角的弧度，值越大角越圆。
+我们还可以把四个角设定成不同的角度，方法为：
+<corners 
+        android:topRightRadius="20dp"    右上角
+        android:bottomLeftRadius="20dp"    右下角
+        android:topLeftRadius="1dp"    左上角
+        android:bottomRightRadius="20dp"    左下角
+ />
