@@ -8,6 +8,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 public class ListAdaptersujin extends BaseAdapter {
@@ -77,13 +78,23 @@ public class ListAdaptersujin extends BaseAdapter {
             case TYPE_1:  
                 convertView = inflater.inflate(R.layout.item,  
                         parent, false);  
-                holder1.text = (TextView) convertView.findViewById(R.id.item_name);
+                holder1.name = (TextView) convertView.findViewById(R.id.item_name);
+                holder1.date = (TextView) convertView.findViewById(R.id.item_date);
+                holder1.sdate = (TextView) convertView.findViewById(R.id.item_sdate);
+                holder1.length = (TextView) convertView.findViewById(R.id.lab_length);
+                holder1.like = (TextView) convertView.findViewById(R.id.lab_like);
+                holder1.see = (TextView) convertView.findViewById(R.id.lab_see);
                 convertView.setTag(holder1);  
                 break;  
             case TYPE_2:  
                 convertView = inflater.inflate(R.layout.item1,  
                         parent, false);  
-                holder2.text = (TextView) convertView.findViewById(R.id.item_name);
+                holder2.name = (TextView) convertView.findViewById(R.id.item_name);
+                holder2.date = (TextView) convertView.findViewById(R.id.item_date);
+                holder2.sdate = (TextView) convertView.findViewById(R.id.item_sdate);
+                holder2.length = (TextView) convertView.findViewById(R.id.lab_length);
+                holder2.like = (TextView) convertView.findViewById(R.id.lab_like);
+                holder2.see = (TextView) convertView.findViewById(R.id.lab_see);
                 convertView.setTag(holder2);  
                 break;  
 			}
@@ -96,13 +107,23 @@ public class ListAdaptersujin extends BaseAdapter {
                     holder2 = (ViewHolder2) convertView.getTag();  
                     break;  
                 }  
+              
             switch (type) {  
               case TYPE_1:  
-            	  holder1.text.setText(list.get(position).getName());
+            	  holder1.name.setText(list.get(position).getName());
+            	  holder1.sdate.setText(list.get(position).getDate());
+            	  holder1.date.setText(list.get(position).getTimedate());
+            	  holder1.length.setText(list.get(position).getLength());
+            	  holder1.like.setText(list.get(position).getLikenmb());
+            	  holder1.see.setText(list.get(position).getSeenmb());
                   break;  
               case TYPE_2:  
-            	  
-            	  holder2.text.setText(list.get(position).getName());
+            	  holder2.name.setText(list.get(position).getName());
+            	  holder2.sdate.setText(list.get(position).getDate());
+            	  holder2.date.setText(list.get(position).getTimedate());
+            	  holder2.length.setText(list.get(position).getLength());
+            	  holder2.like.setText(list.get(position).getLikenmb());
+            	  holder2.see.setText(list.get(position).getSeenmb());
                   break;  
 			}
 		
@@ -112,14 +133,14 @@ public class ListAdaptersujin extends BaseAdapter {
 		}
 
 	public final class ViewHolder1 {
-		public TextView text;
-		public TextView singer;
+		public TextView name,sdate,date,like,length,see;
+		public ImageView img;
 
 	}
 
 	public final class ViewHolder2 {
-		public TextView text;
-		public TextView singer;
+		public TextView name,sdate,date,like,length,see;
+		public ImageView img;
 
 	}
 
