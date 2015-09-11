@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<hibernate-mapping>
+    <class name="com.rescam.xhb.framework.entity.GoodsCatalog" table="goods_catalog" catalog="frid">
+        <id name="goodsCatalogId" type="java.lang.Integer">
+            <column name="goods_catalog_id" />
+            <generator class="assigned" />
+        </id>
+        <property name="parentCatalogId" type="java.lang.Integer" >
+            <column name="parent_catalog_id">
+                <comment>父目录id</comment>
+            </column>
+        </property>
+        <property name="goodsCatalogName" type="java.lang.String">
+            <column name="goods_catalog_name" length="50">
+                <comment>目录名称</comment>
+            </column>
+        </property>
+        <property name="goodsCatalogStatus" type="java.lang.String">
+            <column name="goods_catalog_status" length="1">
+                <comment>状态</comment>
+            </column>
+        </property>
+    </class>
+</hibernate-mapping>

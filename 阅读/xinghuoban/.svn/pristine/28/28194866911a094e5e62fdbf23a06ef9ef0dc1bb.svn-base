@@ -1,0 +1,26 @@
+package com.rescam.xhb.framework.service.impl;
+
+import java.util.List;
+
+import org.hibernate.HibernateException;
+
+import com.rescam.xhb.common.service.BasicServiceImpl;
+import com.rescam.xhb.framework.dao.CustomerDao;
+import com.rescam.xhb.framework.dao.GoodsDao;
+import com.rescam.xhb.framework.entity.Customer;
+import com.rescam.xhb.framework.entity.Goods;
+import com.rescam.xhb.framework.service.CustomerService;
+import com.rescam.xhb.framework.service.GoodsService;
+
+/**
+ * 商品service
+ * 
+ * @author xueyang
+ *
+ */
+public class CustomerServiceImpl extends BasicServiceImpl<Customer>implements CustomerService {
+
+	//private CustomerDao customerDao;
+
+
+}

@@ -1,0 +1,112 @@
+package com.rescam.xhb.common.dao;
+
+import java.util.List;
+
+import org.hibernate.HibernateException;
+
+@SuppressWarnings("rawtypes")
+public interface BasicDao<T> {
+	/**
+	 * 按ID查询指定实体
+	 * 
+	 * @param id
+	 *            实体对应的pk 这里统一为Integer类型
+	 * @return
+	 * @throws HibernateException
+	 */
+	public T findById(Integer id) throws HibernateException;// 根据id查找数据
+
+	/**
+	 * 保存一个实体到到数据库
+	 * 
+	 * @param entity
+	 * @throws HibernateException
+	 */
+	public void saveEntity(T entity) throws HibernateException;// 添加数据
+
+	/**
+	 * 删除一个实体
+	 * 
+	 * @param entity
+	 * @throws HibernateException
+	 */
+	public void deleteEntity(T entity) throws HibernateException;// 删除数据
+
+	/**
+	 * 更新一个实体
+	 * 
+	 * @param entity
+	 * @throws HibernateException
+	 */
+	public void updateEntity(T entity) throws HibernateException;// 单表修改数据
+
+	/**
+	 * 使用hql 语句进行分页查询操作
+	 * 
+	 * @param hql
+	 *            需要查询的hql语句
+	 * @param params
+	 *            如果hql有一个参数需要传入，param就是传入的参数
+	 * @param currentpage
+	 *            当前页 如果小于1 则默认查询第一页开始
+	 * @param pageSize
+	 *            每页需要显示的记录数
+	 * @return 当前页的所有记录
+	 */
+	public List<T> findByPage(final String hql, final int currentpage,
+	        final int pageSize, final Object... params);
+
+	/**
+	 * 根据默认的实体查询 指定页码的信息
+	 * 
+	 * @param currentpage
+	 *            当前页 如果小于1 则默认查询第一页开始
+	 * @param pageSize每页需要显示的记录数
+	 * @return 当前页的所有记录
+	 */
+	public List<T> findByPage(final int currentpage, final int pageSize);
+
+	/**
+	 * 根据语句查找总数
+	 * 
+	 * @param hql
+	 *            hql语句
+	 * @return 对应的数目
+	 */
+	Integer getCount(String hql, Object... params);
+
+	/**
+	 * 查询默认实体的所有结果集 数量
+	 * 
+	 * @return 无条件 实体总数据
+	 */
+	Integer getCount();
+
+	/**
+	 * 使用sql 语句进行分页查询操作
+	 * 
+	 * @param sql
+	 *            需要查询的sql语句
+	 * @param params
+	 *            如果sql有一个参数需要传入，param就是传入的参数
+	 * @param currentpage
+	 *            当前页 如果小于1 则默认查询第一页开始
+	 * @param pageSize
+	 *            每页需要显示的记录数
+	 * @return 当前页的所有记录 实体集合
+	 */
+	public List findBySqlPage(final String sql, final int currentpage,
+	        final int pageSize, final Object[] params);
+
+	/**
+	 * 查询全部
+	 * 
+	 * @param clazz
+	 * @return
+	 */
+	public List getObjects(Class clazz);
+
+	public List findBySql(String sql);
+
+	public int saveOrUpdateBySql(String sql);
+}

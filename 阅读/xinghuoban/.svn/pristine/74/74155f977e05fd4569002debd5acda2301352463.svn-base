@@ -1,0 +1,82 @@
+package com.rescam.xhb.framework.action;
+
+import sun.font.CreatedFontTracker;
+import net.sf.json.JSONObject;
+
+import com.opensymphony.xwork2.ModelDriven;
+import com.rescam.xhb.common.action.BasicAction;
+import com.rescam.xhb.framework.entity.Customer;
+import com.rescam.xhb.framework.service.CustomerService;
+
+@SuppressWarnings("serial")
+public class CustomerAction extends BasicAction implements
+		ModelDriven<Customer> {
+
+	private Customer customer = new Customer();
+	private int cardType;
+	private String cardNumber;
+	private CustomerService customerService;
+	private JSONObject jsonObj;
+
+	@Override
+	public Customer getModel() {
+		return customer;
+	}
+
+	public JSONObject getJsonObj() {
+		return jsonObj;
+	}
+
+	public void setJsonObj(JSONObject jsonObj) {
+		this.jsonObj = jsonObj;
+	}
+
+	public int getCardType() {
+		return cardType;
+	}
+
+	public void setCardType(int cardType) {
+		this.cardType = cardType;
+	}
+
+	public String getCardNumber() {
+		return cardNumber;
+	}
+
+	public void setCardNumber(String cardNumber) {
+		this.cardNumber = cardNumber;
+	}
+
+	public CustomerService getCustomerService() {
+		return customerService;
+	}
+
+	public void setCustomerService(CustomerService customerService) {
+		this.customerService = customerService;
+	}
+
+	public Customer getCustomer() {
+		return customer;
+	}
+
+	public void setCustomer(Customer customer) {
+		this.customer = customer;
+	}
+
+	public String init() {
+		//1、根据微信号判断用户是否已经存在
+		//如果存在，直接登录
+		//如果不存在，跳转到注册页
+		
+//		if (findweixinId(getweixinId())) {
+//			denglu();
+//		}
+		return "init";
+	}
+
+	public String register() {
+		//插入数据
+//		customerService.
+	    return SUCCESS;
+	}
+}

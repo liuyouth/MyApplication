@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<hibernate-mapping>
+    <class name="com.rescam.xhb.framework.entity.Customer" table="customer" catalog="frid">
+        <id name="customerId" type="java.lang.Integer">
+            <column name="customer_id" />
+            <generator class="assigned" /> <!-- 声明主键 -->
+        </id>
+        <property name="customerName" type="java.lang.String" >
+            <column name="customer_name" length="10">
+                <comment>姓名</comment>
+            </column>
+        </property>
+        <property name="customerPhone" type="java.lang.String">
+            <column name="customer_phone" length="11">
+                <comment>手机号</comment>
+            </column>
+        </property>
+        <property name="customerSex" type="java.lang.String">
+            <column name="customer_sex" length="1">
+                <comment>性别</comment>
+            </column>
+        </property>
+        <property name="customerBirthday" type="java.util.Date">
+            <column name="customer_birthday" >
+                <comment>生日</comment>
+            </column>
+        </property>
+        <property name="weixinOpenId" type="java.lang.String">
+            <column name="weixin_openid" length="100">
+                <comment>微信openId</comment>
+            </column>
+        </property>
+        <property name="walletAccount" type="java.lang.String">
+            <column name="wallet_account" length="20">
+                <comment>账户号</comment>
+            </column>
+        </property>
+        <property name="walletBalance" type="java.math.BigDecimal">
+            <column name="wallet_balance" length="9">
+                <comment>账户余额</comment>
+            </column>
+        </property>
+        <property name="cardCount" type="java.lang.Integer">
+            <column name="card_count" >
+                <comment>卡片绑定数量</comment>
+            </column>
+        </property>
+        <property name="deliveryAddressCount" type="java.lang.Integer">
+            <column name="delivery_address_count" >
+                <comment>配送地址数量</comment>
+            </column>
+        </property>
+        <property name="customerStatus" type="java.lang.String">
+            <column name="customer_status">
+                <comment>状态</comment>
+            </column>
+        </property>
+        
+    </class>
+</hibernate-mapping>

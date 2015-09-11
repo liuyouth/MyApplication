@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<hibernate-mapping>
+    <class name="com.rescam.xhb.framework.entity.CustomerCard" table="customer_card" catalog="frid">
+        <id name="customerCardId" type="java.lang.Integer">
+            <column name="customer_card_id" />
+            <generator class="identity" /> <!-- 声明主键 -->
+        </id>
+        <property name="customerId" type="java.lang.String" >
+            <column name="customer_id" length="10">
+                <comment>客户id</comment>
+            </column>
+        </property>
+        <property name="cardNumber" type="java.lang.String">
+            <column name="card_number" length="11">
+                <comment>卡号</comment>
+            </column>
+        </property>
+        <property name="cardType" type="java.lang.String">
+            <column name="card_type" length="1">
+                <comment>卡片类型</comment>
+            </column>
+        </property>
+        
+        
+    </class>
+</hibernate-mapping>

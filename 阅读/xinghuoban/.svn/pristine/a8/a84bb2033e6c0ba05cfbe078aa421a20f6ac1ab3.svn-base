@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<hibernate-mapping>
+    <class name="com.rescam.xhb.framework.entity.Goods" table="goods" catalog="frid">
+        <id name="goodsId" type="java.lang.Integer">
+            <column name="goods_id" />
+            <generator class="assigned" />
+        </id>
+        <property name="supplierId" type="java.lang.Integer" >
+            <column name="supplier_id">
+                <comment>供应商id</comment>
+            </column>
+        </property>
+        <property name="goodsType" type="java.lang.String">
+            <column name="goods_type" length="1">
+                <comment>商品种类</comment>
+            </column>
+        </property>
+        <property name="goodsCatalogId" type="java.lang.Integer">
+            <column name="goods_catalog_id">
+                <comment>目录id</comment>
+            </column>
+        </property>
+        <property name="goodsName" type="java.lang.String">
+            <column name="goods_name" length="50">
+                <comment>商品名称</comment>
+            </column>
+        </property>
+        <property name="goodsIntroduce" type="java.lang.String">
+            <column name="goods_introduce" length="1000">
+                <comment>商品介绍</comment>
+            </column>
+        </property>
+        <property name="serviceHotline" type="java.lang.String">
+            <column name="service_hotline" length="30">
+                <comment>服务热线</comment>
+            </column>
+        </property>
+        <property name="goodsPrice" type="java.lang.String">
+            <column name="goods_price" length="9">
+                <comment>单价</comment>
+            </column>
+        </property>
+        <property name="chargeUnit" type="java.lang.String">
+            <column name="charge_unit" length="20">
+                <comment>计价单位</comment>
+            </column>
+        </property>
+        <property name="goodsSalesStatus" type="java.lang.String">
+            <column name="goods_sales_status" length="1">
+                <comment>销售状态</comment>
+            </column>
+        </property>
+        <property name="total" type="java.lang.Integer">
+            <column name="total">
+                <comment>总量</comment>
+            </column>
+        </property>
+        <property name="sold" type="java.lang.Integer">
+            <column name="sold">
+                <comment>已售</comment>
+            </column>
+        </property>
+        <property name="inventories" type="java.lang.Integer">
+            <column name="inventories">
+                <comment>库存</comment>
+            </column>
+        </property>
+        <property name="inputTime" type="java.lang.String">
+            <column name="input_time" length="20">
+                <comment>录入时间</comment>
+            </column>
+        </property>
+        <property name="onSaleTime" type="java.lang.String">
+            <column name="on_sale_time" length="20">
+                <comment>上架时间</comment>
+            </column>
+        </property>
+        <property name="offSaleTime" type="java.lang.String">
+            <column name="off_sale_time" length="20">
+                <comment>下架时间</comment>
+            </column>
+        </property>
+    </class>
+</hibernate-mapping>

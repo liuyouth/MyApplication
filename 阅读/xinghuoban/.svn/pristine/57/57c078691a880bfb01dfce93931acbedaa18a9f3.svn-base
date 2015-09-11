@@ -1,0 +1,24 @@
+package com.rescam.xhb.framework.dao.impl;
+
+import java.util.ArrayList;
+import java.util.List;
+
+import org.hibernate.HibernateException;
+
+import com.rescam.xhb.common.dao.BasicDaoImpl;
+import com.rescam.xhb.framework.dao.CustomerDao;
+import com.rescam.xhb.framework.dao.GoodsDao;
+import com.rescam.xhb.framework.entity.Customer;
+import com.rescam.xhb.framework.entity.Goods;
+
+/**
+ * 用户Dao实现
+ * 
+ * @author liubo
+ * 
+ */
+public class CustomerDaoImpl extends BasicDaoImpl<Customer> implements CustomerDao {
+
+
+
+}

@@ -1,0 +1,60 @@
+package com.rescam.xhb.framework.action;
+
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
+import com.opensymphony.xwork2.ModelDriven;
+import com.rescam.xhb.common.action.BasicAction;
+import com.rescam.xhb.framework.entity.GoodsCatalog;
+import com.rescam.xhb.framework.service.GoodsCatalogService;
+
+import net.sf.json.JSONObject;
+
+@SuppressWarnings("serial")
+public class GoodsCatalogAction extends BasicAction implements ModelDriven<GoodsCatalog> {
+
+	GoodsCatalog goodsCatalog = new GoodsCatalog();
+
+	@Override
+	public GoodsCatalog getModel() {
+		return goodsCatalog;
+	}
+
+	private JSONObject jsonObj;
+
+	public JSONObject getJsonObj() {
+		return jsonObj;
+	}
+
+	public void setJsonObj(JSONObject jsonObj) {
+		this.jsonObj = jsonObj;
+	}
+
+	private GoodsCatalogService goodsCatalogService;
+
+	public GoodsCatalogService getGoodsCatalogService() {
+		return goodsCatalogService;
+	}
+
+	public void setGoodsCatalogService(GoodsCatalogService goodsCatalogService) {
+		this.goodsCatalogService = goodsCatalogService;
+	}
+
+	/**
+	 * 查找一级菜单列表
+	 * 
+	 * @return
+	 */
+	@SuppressWarnings("rawtypes")
+	public String queryFirstMenuList() {
+		
+		List list = goodsCatalogService.queryFirstMenuList();
+		
+		Map<String, Object> jsonMap = new HashMap<String, Object>();
+		jsonMap.put("firstMenuList", list);
+		jsonObj = JSONObject.fromObject(jsonMap);
+		
+		return SUCCESS;
+	}
+}

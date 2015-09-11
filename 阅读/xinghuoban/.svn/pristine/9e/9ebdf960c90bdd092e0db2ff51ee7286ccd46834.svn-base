@@ -1,0 +1,22 @@
+package com.rescam.xhb.framework.service;
+
+import java.util.List;
+
+import com.rescam.xhb.common.service.BasicService;
+import com.rescam.xhb.framework.entity.Goods;
+
+public interface GoodsService extends BasicService<Goods> {
+
+	/**
+	 * 按照商品种类、销售状态查询商品总数
+	 * @return
+	 */
+	public int getGoodsTotalByTypeAndStatus(String goodsType, String goodsSalesStatus, int goodsCatalogId);
+	
+	/**
+	 * 按照商品种类、销售状态查询商品列表(分页数据)
+	 * @return
+	 */
+	@SuppressWarnings("rawtypes")
+	public List findGoodsListByTypeAndStatus(String goodsType, String goodsSalesStatus, int goodsCatalogId, int page);
+}

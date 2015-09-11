@@ -1,0 +1,36 @@
+package com.rescam.xhb.framework.dao;
+
+import java.util.List;
+import java.util.Map;
+
+import com.rescam.xhb.common.dao.BasicDao;
+import com.rescam.xhb.framework.entity.Goods;
+
+public interface GoodsDao extends BasicDao<Goods> {
+
+	/**
+	 * 按照商品种类、销售状态查询商品总量
+	 * @return
+	 */
+	public int getGoodsTotalByTypeAndStatus(String goodsType, String goodsSalesStatus, int goodsCatalogId);
+	
+	/**
+	 * 按照商品种类、销售状态查询商品列表
+	 * @return
+	 */
+	@SuppressWarnings("rawtypes")
+	public List findGoodsListByTypeAndStatus(String goodsType, String goodsSalesStatus, int goodsCatalogId, int page);
+	
+
+	/**
+	 * 按照商品id查询商品详情
+	 * @return
+	 */
+	public Map<String ,Object> getGoodsDetailById(int goodsId);
+	
+	/**
+	 * 按照商品id、商品种类、商品图片状态查询商品相关图片列表
+	 * @return
+	 */
+	public List<Map<String ,Object>> getGoodsImageListByIdAndType(int goodsId, String goodsImageStatus);
+}

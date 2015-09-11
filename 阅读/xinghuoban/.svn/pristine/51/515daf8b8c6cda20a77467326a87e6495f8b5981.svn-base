@@ -1,0 +1,115 @@
+package com.rescam.xhb.common.action.weiXin;
+
+import javax.servlet.http.HttpServletRequest;
+
+import net.sf.json.JSONObject;
+
+import org.apache.log4j.Logger;
+import org.apache.struts2.ServletActionContext;
+
+import com.rescam.xhb.common.action.BasicAction;
+import com.rescam.xhb.common.util.WeiXinUtility;
+
+@SuppressWarnings("serial")
+public class WeiXinAction extends BasicAction {
+
+	private static Logger logger = Logger.getLogger(WeiXinAction.class);
+	private JSONObject jsonObj;
+	private String type;// 哪个页面取用户信息（0：龙头；1：龙身）
+	private String code;
+	private String state;
+	private String mediaId;
+	private String openId;// 分享者的微信id
+	private String dragonId;// 分享者的龙头id
+	private String parentId;// 分享者的父节点id
+
+	public String getType() {
+		return type;
+	}
+
+	public void setType(String type) {
+		this.type = type;
+	}
+
+	public String getOpenId() {
+		return openId;
+	}
+
+	public void setOpenId(String openId) {
+		this.openId = openId;
+	}
+
+	public String getDragonId() {
+		return dragonId;
+	}
+
+	public void setDragonId(String dragonId) {
+		this.dragonId = dragonId;
+	}
+
+	public String getParentId() {
+		return parentId;
+	}
+
+	public void setParentId(String parentId) {
+		this.parentId = parentId;
+	}
+
+	public String getMediaId() {
+		return mediaId;
+	}
+
+	public void setMediaId(String mediaId) {
+		this.mediaId = mediaId;
+	}
+
+	public String getState() {
+		return state;
+	}
+
+	public void setState(String state) {
+		this.state = state;
+	}
+
+	public String getCode() {
+		return code;
+	}
+
+	public void setCode(String code) {
+		this.code = code;
+	}
+
+	public JSONObject getJsonObj() {
+		return jsonObj;
+	}
+
+	public void setJsonObj(JSONObject jsonObj) {
+		this.jsonObj = jsonObj;
+	}
+
+	WeiXinUtility weixinUtil = new WeiXinUtility();
+
+	// 取签名
+	public String getSignature() {
+		try {
+			HttpServletRequest request = ServletActionContext.getRequest();
+
+			jsonObj = weixinUtil.queryJsapiTicket(request, openId, dragonId,
+			        parentId, code, state);
+		} catch (Exception e) {
+			logger.error(e);
+		}
+		return SUCCESS;
+	}
+
+	// 取网页授权取用户信息（龙头）
+	public String getUserInfo() {
+
+		try {
+			jsonObj = weixinUtil.getPageAccess_token(type, code);
+		} catch (Exception e) {
+			logger.error(e);
+		}
+		return SUCCESS;
+	}
+}

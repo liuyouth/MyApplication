@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<hibernate-mapping>
+    <class name="com.rescam.xhb.framework.entity.AuthorityGroup" table="authority_group" catalog="frid">
+        <id name="authorityGroupId" type="java.lang.Integer">
+            <column name="authority_group_id" />
+            <generator class="identity" />
+        </id>
+        <property name="authorityGroupName" type="java.lang.String">
+            <column name="authority_group_name" length="20">
+                <comment>权限组名称</comment>
+            </column>
+        </property>
+    </class>
+</hibernate-mapping>

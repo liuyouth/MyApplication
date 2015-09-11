@@ -1,0 +1,295 @@
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <title>商品列表</title>
+    <meta name="description" content="Flat UI Kit Free is a Twitter Bootstrap Framework design and Theme, this responsive framework includes a PSD and HTML version."/>
+
+    <meta name="viewport" content="initial-scale=1.0, maximum-scale=1.0">
+	
+    <link href="js/dist/css/vendor/bootstrap.min.css" rel="stylesheet">
+	
+    <link href="js/dist/css/flat-ui.css" rel="stylesheet">
+  </head>
+  <body style="color:#000000;">
+    <div class="container">
+		<!--标题-->
+		<div class="row navbar-fixed-top" style="text-align:center;border-bottom:1px solid #999999;background-color:#FFFFFF;">
+			商品列表
+		</div>
+		<!--标题-->
+		
+		<!--一级菜单-->
+        <div class="row" style="margin-top:31px;">
+			<ul class="nav nav-tabs" style="margin-top:5px;margin-left:5px;">
+				<li id="travelBtn" role="presentation" class="active" onclick="javascript:changeTopBtn(1);">
+					<a href="javascript:void(0);">
+						出行
+					</a>
+				</li>
+				<li id="goodsBtnTop" role="presentation" onclick="javascript:changeTopBtn(2);">
+					<a href="javascript:void(0);">
+						商品
+					</a>
+				</li>
+				<li id="serviceBtn" role="presentation" onclick="javascript:changeTopBtn(3);">
+					<a href="javascript:void(0);">
+						服务
+					</a>
+				</li>
+				<li id="shoppingCartBtn" role="presentation" onclick="javascript:changeTopBtn(4);">
+					<a href="javascript:void(0);">
+						购物车
+					</a>
+				</li>
+			</ul>
+		</div>
+		<!--一级菜单-->
+		
+		<!--内容-->
+		<div class="row">
+		
+			<!--二级菜单-->
+			<div class="col-xs-3" style="padding:0px 3px;">
+				<ul class="list-group" style="font-size:14px;text-align:center;">
+					<li id="fenlei1" class="list-group-item active secondList" style="padding:3px 0px;cursor:pointer;" 
+						onclick="javascript:changeSecondList(this);">
+						旋翼大型机
+					</li>
+					<li id="fenlei2" class="list-group-item secondList" style="padding:3px 0px;cursor:pointer;" 
+						onclick="javascript:changeSecondList(this);">
+						旋翼小型机
+					</li>
+				</ul>
+			</div>
+			<!--二级菜单-->
+			
+			<!--商品列表-->
+			<div class="col-xs-9">
+				<div class="row" id="goodsId" style="border:1px solid #999999;" onclick="javascript:jumpToDetail(this);">
+					<div class="col-xs-5" style="padding:5px;">
+						<img src="docs\assets\img\demo\browser-author.jpg" style="width:80px;height:80px;">
+					</div>
+					<div class="col-xs-7">
+						<div class="row">
+							<span style="font-size:80%;">4人直升机</span>
+						</div>
+						<div class="row">
+							<p style="font-size:8px;color:#666666;margin:3px 0px;">附送驾驶员，十公升汽油</p>
+						</div>
+						<div class="row">
+							<span style="font-size:8px;color:#FA0B0B;">￥10W/天</span>
+						</div>
+					</div>
+				</div>
+				
+				<div class="row" style="border:1px solid #999999;">
+					<div class="col-xs-5" style="padding:5px;">
+						<img src="docs\assets\img\demo\browser-author.jpg" style="width:80px;height:80px;">
+					</div>
+					<div class="col-xs-7">
+						<div class="row">
+							<span style="font-size:80%;">4人直升机</span>
+						</div>
+						<div class="row">
+							<p style="font-size:8px;color:#666666;margin:3px 0px;">附送驾驶员，十公升汽油</p>
+						</div>
+						<div class="row">
+							<span style="font-size:8px;color:#666666;"><s>￥10W/天</s></span>
+							<span style="font-size:8px;color:#FA0B0B;">￥8W/天</span>
+						</div>
+					</div>
+				</div>
+				
+				<div class="row" style="border:1px solid #999999;">
+					<div class="col-xs-5" style="padding:5px;">
+						<img src="docs\assets\img\demo\browser-author.jpg" style="width:80px;height:80px;">
+					</div>
+					<div class="col-xs-7">
+						<div class="row">
+							<span style="font-size:80%;">4人直升机</span>
+						</div>
+						<div class="row">
+							<p style="font-size:8px;color:#666666;margin:3px 0px;">附送驾驶员，十公升汽油</p>
+						</div>
+						<div class="row">
+							<span style="font-size:8px;color:#FA0B0B;">￥10W/天</span>
+						</div>
+					</div>
+				</div>
+				
+				<div class="row" style="border:1px solid #999999;">
+					<div class="col-xs-5" style="padding:5px;">
+						<img src="docs\assets\img\demo\browser-author.jpg" style="width:80px;height:80px;">
+					</div>
+					<div class="col-xs-7">
+						<div class="row">
+							<span style="font-size:80%;">4人直升机</span>
+						</div>
+						<div class="row">
+							<p style="font-size:8px;color:#666666;margin:3px 0px;">附送驾驶员，十公升汽油</p>
+						</div>
+						<div class="row">
+							<span style="font-size:8px;color:#FA0B0B;">￥10W/天</span>
+						</div>
+					</div>
+				</div>
+				
+				<div class="row" style="border:1px solid #999999;">
+					<div class="col-xs-5" style="padding:5px;">
+						<img src="docs\assets\img\demo\browser-author.jpg" style="width:80px;height:80px;">
+					</div>
+					<div class="col-xs-7">
+						<div class="row">
+							<span style="font-size:80%;">4人直升机</span>
+						</div>
+						<div class="row">
+							<p style="font-size:8px;color:#666666;margin:3px 0px;">附送驾驶员，十公升汽油</p>
+						</div>
+						<div class="row">
+							<span style="font-size:8px;color:#FA0B0B;">￥10W/天</span>
+						</div>
+					</div>
+				</div>
+				
+				<div class="row" style="border:1px solid #999999;">
+					<div class="col-xs-5" style="padding:5px;">
+						<img src="docs\assets\img\demo\browser-author.jpg" style="width:80px;height:80px;">
+					</div>
+					<div class="col-xs-7">
+						<div class="row">
+							<span style="font-size:80%;">4人直升机</span>
+						</div>
+						<div class="row">
+							<p style="font-size:8px;color:#666666;margin:3px 0px;">附送驾驶员，十公升汽油</p>
+						</div>
+						<div class="row">
+							<span style="font-size:8px;color:#FA0B0B;">￥10W/天</span>
+						</div>
+					</div>
+				</div>
+				
+				<div class="row" style="border:1px solid #999999;">
+					<div class="col-xs-5" style="padding:5px;">
+						<img src="docs\assets\img\demo\browser-author.jpg" style="width:80px;height:80px;">
+					</div>
+					<div class="col-xs-7">
+						<div class="row">
+							<span style="font-size:80%;">4人直升机</span>
+						</div>
+						<div class="row">
+							<p style="font-size:8px;color:#666666;margin:3px 0px;">附送驾驶员，十公升汽油</p>
+						</div>
+						<div class="row">
+							<span style="font-size:8px;color:#FA0B0B;">￥10W/天</span>
+						</div>
+					</div>
+				</div>
+				
+				<!--分页-->
+				<div class="row" style="margin:10px auto 25px auto;">
+					<ul class="pagination-plain" style="text-align:center;">
+						<li class="previous" style="display: inline;"><a href="#fakelink">← </a></li>
+						<li><input type="text" value="1" style="width:30px;text-align:center;"></li>
+						<li>/</li>
+						<li><a href="#fakelink">3</a></li>
+						<li><a href="#fakelink">GO</a></li>
+						<li class="next" style="float:none;"><a href="#fakelink"> →</a></li>
+					</ul>
+				</div>
+				<!--分页-->
+			</div>
+			<!--商品列表-->
+			
+		</div>
+		<!--内容-->
+    </div> <!-- /container -->
+
+    <footer>
+      <div class="container">
+        <div class="navbar-fixed-bottom" style="background-color:#FFFFFF;padding:5px 0px 0px 0px;margin-bottom:-3px;">
+			
+			<div class="row" style="margin:0px auto;">
+				<div class="btn-group" role="group" style="width:100%;margin:0px;padding:0px;">
+					<button id="goodsBtn" type="button" class="btn btn-info bottomBtn" style="width:33%;" 
+						onclick="javascript:changeBottomBtn(1);">
+						商品
+					</button>
+					<button id="activityBtn" type="button" class="btn btn-primary bottomBtn" style="width:34%;" 
+						onclick="javascript:changeBottomBtn(2);">
+						活动
+					</button>
+					<button id="accountBtn" type="button" class="btn btn-primary bottomBtn" style="width:33%;" 
+						onclick="javascript:changeBottomBtn(3);">
+						账户
+					</button>
+				</div>
+			</div>
+        </div>
+      </div>
+    </footer>
+
+    <script src="js/dist/js/vendor/jquery.min.js"></script>
+    <script src="js/dist/js/flat-ui.min.js"></script>
+    <script src="js/docs/assets/js/application.js"></script>
+	
+	<script type="text/javascript">
+	$(document).ready(function () {
+		$.ajax({
+			type : "post",
+			url : "goods_findGoodsListByTypeAndStatus.html",
+			dataType : "json",
+			data:{
+				goodsType : "2",
+				goodsSalesStatus : "2"
+			},
+			aysnc : false,
+			success : function(data){
+				alert(data);
+			}
+		});
+	});
+	
+	//点击顶部按钮
+	function changeTopBtn(type){
+		//根据type判断跳转页面
+		if(type == 1){
+			window.location.href="travelGoodsList.html"; //出行类商品
+		}else if(type == 2){
+			window.location.href="goodsList.html"; //实体类商品
+		}else if(type == 3){
+			window.location.href="serviceGoodsList.html"; //服务类商品
+		}else if(type == 4){
+			window.location.href="shoppingCart.html"; //购物车
+		}
+	}
+	
+	//点击二级菜单
+	function changeSecondList(list){
+		//改变页面显示
+		$(".secondList").removeClass("active");
+		$("#"+list.id).addClass("active");
+		//然后根据分类去查询商品信息
+		
+	}
+	
+	//点击底部按钮
+	function changeBottomBtn(type){
+		//根据type判断跳转页面
+		if(type == 1){
+			window.location.href="travelGoodsList.html"; //出行类商品
+		}else if(type == 2){
+			window.location.href="activityList.html"; //活动列表
+		}else if(type == 3){
+			window.location.href="accountCenter.html"; //账户中心
+		}
+	}
+	
+	//跳转页面
+	function jumpToDetail(){
+	
+	}
+	</script>
+  </body>
+</html>
