@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent" >
+
+    <SurfaceView
+        android:id="@+id/preview_view"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center" />
+
+    <com.rescam.androidapp.bimx.view.ViewfinderView
+        android:id="@+id/viewfinder_view"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content" />
+
+    <RelativeLayout
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:layout_gravity="center"
+        android:orientation="vertical" >
+        <Button 
+            android:id="@+id/back"
+            android:layout_width="match_parent"
+            android:layout_weight="1"
+            android:layout_height="wrap_content"
+            android:text=" 返回"
+            android:onClick="oneClick"/>
+        <LinearLayout 
+            android:layout_marginTop="450dp"
+            android:layout_width="fill_parent"
+            android:layout_height="100dp"
+            android:orientation="horizontal">
+            
+        <Button 
+            android:id="@+id/btn1"
+            android:layout_width="match_parent"
+            android:layout_weight="1"
+            android:layout_height="wrap_content"
+            android:text="单个扫描"
+            android:onClick="oneClick"/>
+        <Button 
+            android:id="@+id/btn2"
+            android:layout_width="match_parent"
+            android:layout_weight="1"
+            android:layout_height="wrap_content"
+            android:text="多个扫描"
+            android:onClick="twoClick"/>
+        </LinearLayout>
+    </RelativeLayout>
+
+</FrameLayout>
