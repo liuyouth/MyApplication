@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<hibernate-mapping>
+    <class name="com.rescam.xhb.framework.entity.DeliveryAddress" table="delivery_address" catalog="frid">
+        <id name="deliveryAddressId" type="java.lang.Integer">
+            <column name="delivery_address_id" />
+            <generator class="identity" />
+        </id>
+        <property name="customerId" type="java.lang.Integer" >
+            <column name="customer_id">
+                <comment>客户id</comment>
+            </column>
+        </property>
+        <property name="consigneeName" type="java.lang.String">
+            <column name="consignee_name" length="10">
+                <comment>收货人姓名</comment>
+            </column>
+        </property>
+        <property name="consigneePhone" type="java.lang.String">
+            <column name="consignee_phone" length="30">
+                <comment>收货人联系电话</comment>
+            </column>
+        </property>
+        <property name="consigneeAddress" type="java.lang.String">
+            <column name="consignee_address" length="200">
+                <comment>配送地址</comment>
+            </column>
+        </property>
+        <property name="isDefaultAddress" type="java.lang.String">
+            <column name="is_default_address" length="1">
+                <comment>是否为默认配送地址</comment>
+            </column>
+        </property>
+    </class>
+</hibernate-mapping>

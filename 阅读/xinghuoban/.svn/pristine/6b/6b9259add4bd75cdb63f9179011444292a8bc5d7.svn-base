@@ -1,0 +1,44 @@
+package com.rescam.xhb.framework.pojo;
+
+
+public class SessionObj {
+	private Integer manageUserId;
+	private String manageUserName;
+	private Integer authorityGroupId;
+	private Integer customerId;
+	private String weixinOpenId;
+
+	
+	public Integer getAuthorityGroupId() {
+		return authorityGroupId;
+	}
+	public void setAuthorityGroupId(Integer authorityGroupId) {
+		this.authorityGroupId = authorityGroupId;
+	}
+	public Integer getManageUserId() {
+		return manageUserId;
+	}
+	public void setManageUserId(Integer manageUserId) {
+		this.manageUserId = manageUserId;
+	}
+	public String getManageUserName() {
+		return manageUserName;
+	}
+	public void setManageUserName(String manageUserName) {
+		this.manageUserName = manageUserName;
+	}
+	public Integer getCustomerId() {
+		return customerId;
+	}
+	public void setCustomerId(Integer customerId) {
+		this.customerId = customerId;
+	}
+	public String getWeixinOpenId() {
+		return weixinOpenId;
+	}
+	public void setWeixinOpenId(String weixinOpenId) {
+		this.weixinOpenId = weixinOpenId;
+	}
+	
+	
+}

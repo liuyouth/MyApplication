@@ -1,0 +1,111 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<hibernate-mapping>
+    <class name="com.rescam.xhb.framework.entity.Order" table="order" catalog="frid">
+        <id name="orderId" type="java.lang.Integer">
+            <column name="order_id" />
+            <generator class="identity" />
+        </id>
+        <property name="orderBatchId" type="java.lang.Integer" >
+            <column name="order_batch_id" length="20">
+                <comment>批次id</comment>
+            </column>
+        </property>
+        <property name="orderCode" type="java.lang.String">
+            <column name="order_code" length="255">
+                <comment>订单编号</comment>
+            </column>
+        </property>
+        <property name="orderTime" type="java.lang.String">
+            <column name="order_time" length="20">
+                <comment>订单时间</comment>
+            </column>
+        </property>
+        <property name="payStatus" type="java.lang.String">
+            <column name="pay_status" length="1">
+                <comment>支付状态</comment>
+            </column>
+        </property>
+        <property name="payTime" type="java.lang.String">
+            <column name="pay_time" length="20">
+                <comment>支付时间</comment>
+            </column>
+        </property>
+        <property name="goodsId" type="java.lang.Integer">
+            <column name="goods_id">
+                <comment>商品id</comment>
+            </column>
+        </property>
+        <property name="goodsType" type="java.lang.String">
+            <column name="goods_type" length="1">
+                <comment>商品种类</comment>
+            </column>
+        </property>
+        <property name="goodsName" type="java.lang.String">
+            <column name="goods_name" length="50">
+                <comment>商品名称</comment>
+            </column>
+        </property>
+        <property name="goodsPrice" type="java.lang.String">
+            <column name="goods_price" length="9">
+                <comment>单价</comment>
+            </column>
+        </property>
+        <property name="orderNumber" type="java.lang.Integer">
+            <column name="order_number">
+                <comment>购买数量</comment>
+            </column>
+        </property>
+        <property name="totalPrice" type="java.lang.String">
+            <column name="total_price" length="9">
+                <comment>总金额</comment>
+            </column>
+        </property>
+        <property name="linkman" type="java.lang.String">
+            <column name="linkman" length="10">
+                <comment>联系人</comment>
+            </column>
+        </property>
+        <property name="linkmanPhone" type="java.lang.String">
+            <column name="linkman_phone" length="30">
+                <comment>联系人电话</comment>
+            </column>
+        </property>
+        <property name="linkmanAddress" type="java.lang.String">
+            <column name="linkman_address" length="200">
+                <comment>配送地址</comment>
+            </column>
+        </property>
+        <property name="tripTime" type="java.lang.String">
+            <column name="trip_time" length="20">
+                <comment>出行时间</comment>
+            </column>
+        </property>
+        <property name="fromAddress" type="java.lang.String">
+            <column name="from_address" length="200">
+                <comment>出发地</comment>
+            </column>
+        </property>
+        <property name="toAddress" type="java.lang.String">
+            <column name="to_address" length="200">
+                <comment>目的地</comment>
+            </column>
+        </property>
+        <property name="customerMessage" type="java.lang.String">
+            <column name="customer_message" length="200">
+                <comment>客户留言</comment>
+            </column>
+        </property>
+        <property name="electronicGoodsId" type="java.lang.Integer">
+            <column name="electronic_goods_id">
+                <comment>电子商品id</comment>
+            </column>
+        </property>
+        <property name="orderStatus" type="java.lang.String">
+            <column name="order_status" length="1">
+                <comment>状态</comment>
+            </column>
+        </property>
+    </class>
+</hibernate-mapping>

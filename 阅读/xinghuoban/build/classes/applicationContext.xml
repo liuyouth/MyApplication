@@ -2,6 +2,7 @@
 <beans xmlns="http://www.springframework.org/schema/beans"
 	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:context="http://www.springframework.org/schema/context"
 	xmlns:aop="http://www.springframework.org/schema/aop" xmlns:tx="http://www.springframework.org/schema/tx"
+	xmlns:task="http://www.springframework.org/schema/task"
 	xsi:schemaLocation="
 			http://www.springframework.org/schema/beans
 			http://www.springframework.org/schema/beans/spring-beans-4.0.xsd
@@ -10,7 +11,9 @@
 			http://www.springframework.org/schema/aop
             http://www.springframework.org/schema/aop/spring-aop-4.0.xsd
             http://www.springframework.org/schema/tx
-            http://www.springframework.org/schema/tx/spring-tx-4.0.xsd">
+            http://www.springframework.org/schema/tx/spring-tx-4.0.xsd
+            http://www.springframework.org/schema/task
+            http://www.springframework.org/schema/task/spring-task-4.0.xsd">
 
 	<!-- 加载数据库属性配置文件 -->
 	<context:property-placeholder location="classpath:db.properties" />
@@ -40,18 +43,24 @@
                 <value>hibernate/Goods.hbm.xml</value>
                 <value>hibernate/GoodsCatalog.hbm.xml</value>
                 <value>hibernate/ShoppingCart.hbm.xml</value>
+                <value>hibernate/GoodsPreferential.hbm.xml</value>
+                <value>hibernate/Order.hbm.xml</value>
+                <value>hibernate/OrderBatch.hbm.xml</value>
+                <value>hibernate/DeliveryAddress.hbm.xml</value>
                 <!-- houtai -->
                 <value>hibernate/ManageUser.hbm.xml</value>
                 <value>hibernate/AuthorityGroup.hbm.xml</value>
+                <value>hibernate/Supplier.hbm.xml</value>
 			</list>
 		</property>
 		<property name="hibernateProperties">
 			<props>
 				<prop key="hibernate.dialect"> org.hibernate.dialect.MySQL5InnoDBDialect</prop>
-				<prop key="hibernate.show_sql">false</prop>
+				<prop key="hibernate.show_sql">true</prop>
 				<prop key="hibernate.hbm2ddl.auto">update</prop>
 				<prop key="hibernate.jdbc.batch_size">20</prop>
 				<prop key="hibernate.format_sql">true</prop>
+				<prop key="hibernate.use_sql_comments">true</prop>
 				<prop key="hibernate.cache.use_second_level_cache">true</prop>
 				<prop key="hibernate.cache.provider_class">org.hibernate.cache.EhCacheProvider</prop>
 			</props>
@@ -98,5 +107,15 @@
 			expression="execution(* com.rescam.xhb.common.dao.*..*(..))" />
 		<aop:advisor advice-ref="txAdvice" pointcut-ref="daoOperation2" />
 	</aop:config>
+	<!-- 定时器 -->
+	<!-- 
+	<bean id="orderStatusTimer" class="com.rescam.xhb.common.timer.OrderStatusTimer">
+        <property name="orderService" ref="orderService" />
+        <property name="orderBatchService" ref="orderBatchService" />
+    </bean>
+    <task:scheduled-tasks>
+        <task:scheduled ref="orderStatusTimer" method="run" cron="0 0/10 * * * ?" />
+    </task:scheduled-tasks>
+     -->
 </beans>
 

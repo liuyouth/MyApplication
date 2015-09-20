@@ -1,0 +1,192 @@
+package com.rescam.xhb.framework.action;
+
+import java.text.SimpleDateFormat;
+import java.util.Date;
+import java.util.HashMap;
+import java.util.Map;
+
+import com.opensymphony.xwork2.ModelDriven;
+import com.rescam.xhb.common.action.BasicAction;
+import com.rescam.xhb.common.util.NumUtility;
+import com.rescam.xhb.framework.entity.Order;
+import com.rescam.xhb.framework.entity.OrderBatch;
+import com.rescam.xhb.framework.service.GoodsPreferentialService;
+import com.rescam.xhb.framework.service.GoodsService;
+import com.rescam.xhb.framework.service.OrderBatchService;
+import com.rescam.xhb.framework.service.OrderService;
+
+import net.sf.json.JSONObject;
+
+@SuppressWarnings("serial")
+public class OrderAction extends BasicAction implements ModelDriven<Order> {
+
+	private Order order = new Order();
+	private int page = 0;
+	private String goodsIds;//购物车里选中结算的商品id组成的字符串
+	private String goodsNums;//购物车里选中结算的商品id对应的商品数量组成的字符串
+	private String totalPrice;//购物车里选中结算的商品总金额
+	
+	public String getGoodsIds() {
+		return goodsIds;
+	}
+	public void setGoodsIds(String goodsIds) {
+		this.goodsIds = goodsIds;
+	}
+	
+	public String getGoodsNums() {
+		return goodsNums;
+	}
+	public void setGoodsNums(String goodsNums) {
+		this.goodsNums = goodsNums;
+	}
+	
+	public String getTotalPrice() {
+		return totalPrice;
+	}
+	public void setTotalPrice(String totalPrice) {
+		this.totalPrice = totalPrice;
+	}
+	
+	public int getPage() {
+		return page;
+	}
+	public void setPage(int page) {
+		this.page = page;
+	}
+
+	public Order getOrder() {
+		return order;
+	}
+	public void setOrder(Order order) {
+		this.order = order;
+	}
+
+	@Override
+	public Order getModel() {
+		return order;
+	}
+
+	private JSONObject jsonObj;
+
+	public JSONObject getJsonObj() {
+		return jsonObj;
+	}
+
+	public void setJsonObj(JSONObject jsonObj) {
+		this.jsonObj = jsonObj;
+	}
+
+	private OrderService orderService;
+	private OrderBatchService orderBatchService;
+	private GoodsService goodsService;
+	private GoodsPreferentialService goodsPreferentialService;
+
+	public OrderService getOrderService() {
+		return orderService;
+	}
+	public void setOrderService(OrderService orderService) {
+		this.orderService = orderService;
+	}
+
+	public OrderBatchService getOrderBatchService() {
+		return orderBatchService;
+	}
+	public void setOrderBatchService(OrderBatchService orderBatchService) {
+		this.orderBatchService = orderBatchService;
+	}
+
+	public GoodsService getGoodsService() {
+		return goodsService;
+	}
+	public void setGoodsService(GoodsService goodsService) {
+		this.goodsService = goodsService;
+	}
+	
+	public GoodsPreferentialService getGoodsPreferentialService() {
+		return goodsPreferentialService;
+	}
+	public void setGoodsPreferentialService(GoodsPreferentialService goodsPreferentialService) {
+		this.goodsPreferentialService = goodsPreferentialService;
+	}
+	
+	//生成订单
+	public String markTheOrder(){
+		String[] goodsIdArr = goodsIds.split(",");//商品id数组
+		String[] goodsNumArr = goodsNums.split(",");//商品id对应的数量数组
+		
+		SimpleDateFormat sdf=new SimpleDateFormat("yyyy-MM-dd hh-mm-ss");
+		Date nowTime = new Date();
+		String str = sdf.format(nowTime.getTime());//订单时间
+		System.out.println(str);
+		
+		//获取这一批次的订单编号
+		String orderNo = NumUtility.getOrderNo();
+		
+		//生成大批次
+		String orderBatchCode = "D" + orderNo;//批次编号
+		OrderBatch orderBatch = new OrderBatch();
+		orderBatch.setOrderBatchCode(orderBatchCode);
+		orderBatch.setOrderTotal(goodsIdArr.length);
+		orderBatch.setOrderTotal(goodsIdArr.length);
+		orderBatch.setOrderBatchStatus("0");
+		orderBatchService.saveEntity(orderBatch);//生成大订单（批次）
+		
+		//获取刚插入的批次的id(根据批次号查批次详情)
+		Map<String ,Object> orderbatch 
+			= orderBatchService.getOrderBatchByOrderBatchCode(orderBatchCode);
+		int orderBatchId = (int) orderbatch.get("orderBatchId");
+		
+		//生成小订单
+		//查找订单中的商品信息
+		
+		for(int i=0;i<goodsIdArr.length;i++){
+			Map<String, Object> orderMap = new HashMap<String, Object>();//订单map
+			
+			int goodsId = Integer.parseInt(goodsIdArr[i]);
+			String orderCode =  "X" + orderNo + goodsId;//订单编号
+			
+			orderMap.put("orderBatchId", orderBatchId);//批次id
+			orderMap.put("orderCode", orderCode);//订单编号
+			orderMap.put("orderTime", str);//订单时间
+			orderMap.put("payStatus", "1");//支付状态（未支付）
+			
+			// 取当前商品详情数据
+			Map<String, Object> detailData 
+				= goodsService.getGoodsDetailById(goodsId);// (商品id)
+			
+			orderMap.put("goodsId", goodsId);//商品id
+			orderMap.put("goodsType", detailData.get("goodsType"));//商品种类
+			orderMap.put("goodsName", detailData.get("goodsName"));//商品名称
+			float goodsPrice = (float) detailData.get("goodsPrice");
+			
+			//取商品优惠信息
+			Map<String, Object> preferentialMap 
+				= goodsPreferentialService.getGoodsPreferentialDetailById(goodsId);
+			if(null == preferentialMap || !preferentialMap.containsKey("goodsPreferentialId")){
+				//没有优惠信息
+				orderMap.put("goodsPrice", goodsPrice);//单价
+			}else{
+				String preferentialType = (String) preferentialMap.get("preferentialType");//优惠类型（0：打折，1：团购）
+				if(preferentialType.equals("0")){
+					//打折
+					float discount = (float) preferentialMap.get("discount");
+					goodsPrice = goodsPrice * discount;//打折之后的价格
+					System.out.println(goodsPrice);
+					orderMap.put("goodsPrice", goodsPrice);//单价
+				}else{
+					//团购
+					orderMap.put("goodsPrice", preferentialMap.get("groupPrice"));//单价
+				}
+			}
+			orderMap.put("orderNumber", goodsNumArr[i]);//购买数量
+			orderMap.put("totalPrice", totalPrice);//购买数量
+			
+			
+		}
+		
+		
+		
+		
+		return SUCCESS;
+	}
+}

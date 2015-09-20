@@ -1,0 +1,312 @@
+package com.rescam.xhb.framework.action;
+
+import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
+import javax.servlet.http.HttpServletRequest;
+
+import org.apache.struts2.ServletActionContext;
+import org.hibernate.HibernateException;
+
+import com.opensymphony.xwork2.ModelDriven;
+import com.rescam.xhb.common.action.BasicAction;
+import com.rescam.xhb.framework.entity.Goods;
+import com.rescam.xhb.framework.entity.GoodsPreferential;
+import com.rescam.xhb.framework.service.GoodsPreferentialService;
+import com.rescam.xhb.framework.service.GoodsService;
+
+import net.sf.json.JSONObject;
+
+@SuppressWarnings("serial")
+public class GoodsAction extends BasicAction implements ModelDriven<Goods> {
+
+	private Goods goods = new Goods();
+	private GoodsPreferential goodsPreferential = new GoodsPreferential();
+
+	private int page = 0;
+
+	public int getPage() {
+		return page;
+	}
+
+	public void setPage(int page) {
+		this.page = page;
+	}
+
+	public Goods getGoods() {
+		return goods;
+	}
+
+	public void setGoods(Goods goods) {
+		this.goods = goods;
+	}
+
+	public GoodsPreferential getGoodsPreferential() {
+		return goodsPreferential;
+	}
+
+	public void setGoodsPreferential(GoodsPreferential goodsPreferential) {
+		this.goodsPreferential = goodsPreferential;
+	}
+
+	@Override
+	public Goods getModel() {
+		return goods;
+	}
+
+	private JSONObject jsonObj;
+
+	public JSONObject getJsonObj() {
+		return jsonObj;
+	}
+
+	public void setJsonObj(JSONObject jsonObj) {
+		this.jsonObj = jsonObj;
+	}
+
+	private GoodsService goodsService;
+	private GoodsPreferentialService goodsPreferentialService;
+
+	public GoodsService getGoodsService() {
+		return goodsService;
+	}
+
+	public void setGoodsService(GoodsService goodsService) {
+		this.goodsService = goodsService;
+	}
+
+	public GoodsPreferentialService getGoodsPreferentialService() {
+		return goodsPreferentialService;
+	}
+
+	public void setGoodsPreferentialService(GoodsPreferentialService goodsPreferentialService) {
+		this.goodsPreferentialService = goodsPreferentialService;
+	}
+
+	/**
+	 * 按照商品种类、销售状态查询商品列表
+	 * 
+	 * @return
+	 */
+	@SuppressWarnings({ "rawtypes", "unchecked" })
+	public String findGoodsListByTypeAndStatus() {
+		// 取当前条件的所有商品总数
+		int total = goodsService.getGoodsTotalByTypeAndStatus(goods.getGoodsType(), goods.getGoodsSalesStatus(),
+				goods.getGoodsCatalogId());
+
+		// 取当前页面商品列表数据
+		List list = goodsService.findGoodsListByTypeAndStatus(goods.getGoodsType(), goods.getGoodsSalesStatus(),
+				goods.getGoodsCatalogId(), page);
+
+		List<Map<String, Object>> returnList = new ArrayList<Map<String, Object>>();
+		// 取商品打折信息
+		for (int i = 0; i < list.size(); i++) {
+			Map<String, Object> dataMap = new HashMap<String, Object>();
+			dataMap = (Map<String, Object>) list.get(i);
+			int goodsId = (int) dataMap.get("goodsId");
+			//取商品优惠信息
+			Map<String, Object> preferentialMap = goodsPreferentialService.getGoodsPreferentialDetailById(goodsId);
+			if(null == preferentialMap || !preferentialMap.containsKey("goodsPreferentialId")){
+				dataMap.put("goodsPreferentialId", "");
+				dataMap.put("preferentialType", "");
+				dataMap.put("discount", "");
+				dataMap.put("groupPrice", "");
+				dataMap.put("goodsPreferentialStatus", "");
+			}else{
+				dataMap.put("goodsPreferentialId", preferentialMap.get("goodsPreferentialId"));
+				dataMap.put("preferentialType", preferentialMap.get("preferentialType"));
+				dataMap.put("discount", preferentialMap.get("discount"));
+				dataMap.put("groupPrice", preferentialMap.get("groupPrice"));
+				dataMap.put("goodsPreferentialStatus", preferentialMap.get("goodsPreferentialStatus"));
+			}
+			
+			// 取当前商品关联图片的详情数据（商品信息详情展示使用）
+			List<Map<String, Object>> imageListData = goodsService.getGoodsImageListByIdAndType(goodsId, "1");// (商品id，商品图片状态)
+			if(imageListData.size() == 0){
+				dataMap.put("goodsImageId", "");
+				dataMap.put("imagePath", "");
+			}else{
+				for(int j=0;j<imageListData.size();j++){
+					Map<String, Object> imageData = imageListData.get(j);
+					if(imageData.get("isDefault").equals("1") || (char)imageData.get("isDefault") == '1'){
+						dataMap.put("goodsImageId", imageData.get("goodsImageId"));
+						dataMap.put("imagePath", imageData.get("imagePath"));
+					}
+				}
+			}
+			returnList.add(dataMap);
+		}
+
+		Map<String, Object> jsonMap = new HashMap<String, Object>();
+		jsonMap.put("total", total);
+		jsonMap.put("goodsList", returnList);
+		jsonObj = JSONObject.fromObject(jsonMap);
+
+		return SUCCESS;
+	}
+
+	/**
+	 * 按照商品id、商品种类查询商品详情
+	 * 
+	 * @return
+	 */
+	public String getGoodsDetailByIdAndType() {
+
+		// 取当前商品详情数据
+		Map<String, Object> detailData = goodsService.getGoodsDetailById(goods.getGoodsId());// (商品id)
+
+		// 取当前商品关联图片的详情数据（商品信息详情展示使用）
+		List<Map<String, Object>> imageListData = goodsService.getGoodsImageListByIdAndType(goods.getGoodsId(), "1");// (商品id，商品图片状态)
+
+		//取商品优惠信息
+		Map<String, Object> preferentialMap = goodsPreferentialService.getGoodsPreferentialDetailById(goods.getGoodsId());
+		if(null == preferentialMap || !preferentialMap.containsKey("goodsPreferentialId")){
+			detailData.put("goodsPreferentialId", "");
+			detailData.put("preferentialType", "");
+			detailData.put("discount", "");
+			detailData.put("groupPrice", "");
+			detailData.put("goodsPreferentialStatus", "");
+		}else{
+			detailData.put("goodsPreferentialId", preferentialMap.get("goodsPreferentialId"));
+			detailData.put("preferentialType", preferentialMap.get("preferentialType"));
+			detailData.put("discount", preferentialMap.get("discount"));
+			detailData.put("groupPrice", preferentialMap.get("groupPrice"));
+			detailData.put("goodsPreferentialStatus", preferentialMap.get("goodsPreferentialStatus"));
+		}
+		
+		Map<String, Object> jsonMap = new HashMap<String, Object>();
+		jsonMap.put("goodsImageList", imageListData);
+		jsonMap.put("goodsDetail", detailData);
+		jsonObj = JSONObject.fromObject(jsonMap);
+
+		return SUCCESS;
+	}
+	/**
+	 * 后台管理 
+	 * 按照商品种类、销售状态、商品名称、供应商查询商品列表
+	 * @return
+	 */
+	@SuppressWarnings({ "rawtypes", "unchecked" })
+	public String findGoodsListByNameAndSupplierId() {
+		// 取当前条件的所有商品总数
+		int total = goodsService.getGoodsTotalByNameAndSupplierId(goods);
+
+		// 取当前页面商品列表数据
+		List list = goodsService.findGoodsListByNameAndSupplierId(goods, page);
+
+		List<Map<String, Object>> returnList = new ArrayList<Map<String, Object>>();
+		// 取商品打折信息
+		for (int i = 0; i < list.size(); i++) {
+			Map<String, Object> dataMap = new HashMap<String, Object>();
+			dataMap = (Map<String, Object>) list.get(i);
+			int goodsId = (int) dataMap.get("goodsId");
+			//取商品优惠信息
+			Map<String, Object> preferentialMap = goodsPreferentialService.getGoodsPreferentialDetailById(goodsId);
+			if(null == preferentialMap || !preferentialMap.containsKey("goodsPreferentialId")){
+				dataMap.put("goodsPreferentialId", "");
+				dataMap.put("preferentialType", "");
+				dataMap.put("discount", "");
+				dataMap.put("groupPrice", "");
+				dataMap.put("goodsPreferentialStatus", "");
+			}else{
+				dataMap.put("goodsPreferentialId", preferentialMap.get("goodsPreferentialId"));
+				dataMap.put("preferentialType", preferentialMap.get("preferentialType"));
+				dataMap.put("discount", preferentialMap.get("discount"));
+				dataMap.put("groupPrice", preferentialMap.get("groupPrice"));
+				dataMap.put("goodsPreferentialStatus", preferentialMap.get("goodsPreferentialStatus"));
+			}
+			
+			// 取当前商品关联图片的详情数据（商品信息详情展示使用）
+			List<Map<String, Object>> imageListData = goodsService.getGoodsImageListByIdAndType(goodsId, "1");// (商品id，商品图片状态)
+			if(imageListData.size() == 0){
+				dataMap.put("goodsImageId", "");
+				dataMap.put("imagePath", "");
+			}else{
+				for(int j=0;j<imageListData.size();j++){
+					Map<String, Object> imageData = imageListData.get(j);
+					if(imageData.get("isDefault").equals("1") || (char)imageData.get("isDefault") == '1'){
+						dataMap.put("goodsImageId", imageData.get("goodsImageId"));
+						dataMap.put("imagePath", imageData.get("imagePath"));
+					}
+				}
+			}
+			returnList.add(dataMap);
+		}
+
+		Map<String, Object> jsonMap = new HashMap<String, Object>();
+		jsonMap.put("total", total);
+		jsonMap.put("goodsList", returnList);
+		jsonObj = JSONObject.fromObject(jsonMap);
+
+		return SUCCESS;
+	}
+	/**
+	 * 后台管理
+	 * 添加商品
+	 * @return
+	 */
+	public String addGoods(){
+		SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");//设置日期格式
+		String inputTime=df.format(new Date());// new Date()为获取当前系统时间
+		goods.setInventories(goods.getTotal());//库存
+		goods.setSold(0);//已售
+		goods.setInputTime(inputTime);//录入时间
+		String goodsSalesStatus=goods.getGoodsSalesStatus();
+		if(goodsSalesStatus.equals("2")){
+			goods.setOnSaleTime(inputTime);//上架时间
+		}
+	
+		jsonObj = new JSONObject();
+		jsonObj.put("result", false);
+		try {
+			goodsService.saveEntity(goods);
+			//优惠商品
+			String type=goodsPreferential.getPreferentialType();
+			if(!type.equals("-1")){
+				if(type.equals("0")){
+					goodsPreferential.setGroupPrice(null);
+				}else{
+					goodsPreferential.setDiscount(null);
+				}
+				goodsPreferential.setGoodsId(goods.getGoodsId());//新插入的goodsId
+				goodsPreferential.setGoodsPreferentialStatus("1");//状态 1：有效
+				goodsPreferentialService.saveEntity(goodsPreferential);
+			}
+			jsonObj.put("result", true);
+		} catch (HibernateException e) {
+			e.printStackTrace();
+		}
+		return SUCCESS;
+	}
+	/**
+	 * 后台管理
+	 * 上传商品图片
+	 * @return
+	 */
+	public String uploadGoodsImage(){
+		String goodsType=goods.getGoodsType();//商品种类
+		int goodsCatalogId=goods.getGoodsCatalogId();//目录
+		//MultipartFile uploadFile
+		return SUCCESS;
+	}
+	/**
+	 * 后台管理
+	 * 商品详细信息
+	 * @return
+	 */
+	public String getGoodsDetailById(){
+		HttpServletRequest request = ServletActionContext.getRequest();
+		int goodsId=Integer.valueOf(request.getParameter("goodsId"));
+		// 取当前商品详情数据
+		goods = goodsService.findById(goodsId);// (商品id)
+		
+		// 取当前商品关联图片的详情数据（商品信息详情展示使用）
+		List<Map<String, Object>> imageListData = goodsService.getGoodsImageListByIdAndType(goods.getGoodsId(), "1");// (商品id，商品图片状态)
+				
+		return "manageGoodsDetail";
+	}
+}

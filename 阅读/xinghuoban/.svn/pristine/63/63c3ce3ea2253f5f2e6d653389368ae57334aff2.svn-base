@@ -1,0 +1,128 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<hibernate-mapping>
+    <class name="com.rescam.xhb.framework.entity.Supplier" table="customer_card" catalog="frid">
+        <id name="supplierId" type="java.lang.Integer">
+            <column name="supplier_id" />
+            <generator class="identity" /> <!-- 声明主键 -->
+        </id>
+        <property name="supplierName" type="java.lang.String" >
+            <column name="supplier_name" length="50">
+                <comment>供应商名称</comment>
+            </column>
+        </property>
+        <property name="supplierPhone" type="java.lang.String">
+            <column name="supplier_phone" length="30" >
+                <comment>联系电话</comment>
+            </column>
+        </property>
+        <property name="supplierAccount" type="java.lang.String">
+            <column name="supplier_account" length="20">
+                <comment>账号</comment>
+            </column>
+        </property>
+        <property name="supplierPassword" type="java.lang.String">
+            <column name="supplier_password" length="100">
+                <comment>密码</comment>
+            </column>
+        </property>
+        <property name="registerCode" type="java.lang.String">
+            <column name="register_code" length="100">
+                <comment>注册号</comment>
+            </column>
+        </property>
+        <property name="supplierType" type="java.lang.String">
+            <column name="supplier_type" length="100">
+                <comment>类型</comment>
+            </column>
+        </property>
+        <property name="registerCapital" type="java.lang.String">
+            <column name="register_capital" length="100">
+                <comment>注册资本</comment>
+            </column>
+        </property>
+        <property name="supplierAddress" type="java.lang.String">
+            <column name="supplier_address" length="100">
+                <comment>住所</comment>
+            </column>
+        </property>
+        <property name="operatingPeriod" type="java.lang.String">
+            <column name="operating_period" length="100">
+                <comment>经营期限</comment>
+            </column>
+        </property>
+        <property name="operatingRange" type="java.lang.String">
+            <column name="operating_range" length="100">
+                <comment>经营范围</comment>
+            </column>
+        </property>
+        <property name="legalRepresentative" type="java.lang.String">
+            <column name="legal_representative" length="100">
+                <comment>法定代表人</comment>
+            </column>
+        </property>
+        <property name="foundDate" type="java.lang.String">
+            <column name="found_date" length="100">
+                <comment>成立日期</comment>
+            </column>
+        </property>
+        <property name="businessLicence" type="java.lang.String">
+            <column name="business_licence" length="100">
+                <comment>营业执照</comment>
+            </column>
+        </property>
+        <property name="organizationCode" type="java.lang.String">
+            <column name="organization_code" length="100">
+                <comment>组织机构代码证</comment>
+            </column>
+        </property>
+        <property name="taxRegistrationCertificate" type="java.lang.String">
+            <column name="tax_registration_certificate" length="100">
+                <comment>税务登记证</comment>
+            </column>
+        </property>
+        <property name="safetyProductionLicense" type="java.lang.String">
+            <column name="safety_production_license" length="100">
+                <comment>安全生产许可证</comment>
+            </column>
+        </property>
+        <property name="businessCertificate" type="java.lang.String">
+            <column name="business_certificate" length="100">
+                <comment>经营许可证</comment>
+            </column>
+        </property>
+        <property name="productionProcessingLicense" type="java.lang.String">
+            <column name="production_processing_license" length="100">
+                <comment>生产/加工许可证</comment>
+            </column>
+        </property>
+        
+        <property name="productSafetyCertificate" type="java.lang.String">
+            <column name="product_safety_certificate" length="100">
+                <comment>产品安全证明</comment>
+            </column>
+        </property>
+        
+        <property name="productSupportCertificate" type="java.lang.String">
+            <column name="product_support_certificate" length="100">
+                <comment>产品保障证明</comment>
+            </column>
+        </property>
+        <property name="transportCirculationCard" type="java.lang.String">
+            <column name="transport_circulation_card" length="100">
+                <comment>运输流通证</comment>
+            </column>
+        </property>
+        <property name="supplierStatus" type="java.lang.String">
+            <column name="supplier_status" length="1">
+                <comment>状态</comment>
+            </column>
+        </property>
+        
+        
+        
+        
+        
+    </class>
+</hibernate-mapping>

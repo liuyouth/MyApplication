@@ -1,0 +1,179 @@
+<?xml version="1.0" encoding="utf-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="
+            http://www.springframework.org/schema/beans
+            http://www.springframework.org/schema/beans/spring-beans-4.0.xsd">
+	
+	
+	<!-- Beans -->
+	<!-- 登录/注册 -->
+	<bean id="customerDao" class="com.rescam.xhb.framework.dao.impl.CustomerDaoImpl">
+		<property name="sessionFactory">
+			<ref bean="sessionFactory" />
+		</property>
+	</bean>
+	<bean id="customerService" class="com.rescam.xhb.framework.service.impl.CustomerServiceImpl">
+		<property name="Dao">
+			<ref bean="customerDao" />
+		</property>
+		<property name="customerDao">
+			<ref bean="customerDao" />
+		</property>
+	</bean>
+	<bean id="customerCardDao" class="com.rescam.xhb.framework.dao.impl.CustomerCardDaoImpl">
+		<property name="sessionFactory">
+			<ref bean="sessionFactory" />
+		</property>
+	</bean>
+	<bean id="customerCardService" class="com.rescam.xhb.framework.service.impl.CustomerCardServiceImpl">
+		<property name="Dao">
+			<ref bean="customerCardDao" />
+		</property>
+	</bean>
+
+	<!-- 商品目录 -->
+	<bean id="goodsCatalogDao" class="com.rescam.xhb.framework.dao.impl.GoodsCatalogDaoImpl">
+		<property name="sessionFactory">
+			<ref bean="sessionFactory" />
+		</property>
+	</bean>
+	<bean id="goodsCatalogService" class="com.rescam.xhb.framework.service.impl.GoodsCatalogServiceImpl">
+		<property name="Dao">
+			<ref bean="goodsCatalogDao" />
+		</property>
+		<property name="goodsCatalogDao">
+			<ref bean="goodsCatalogDao" />
+		</property>
+	</bean>
+	<!-- 商品目录 -->
+	
+	<!-- 商品 -->
+	<bean id="goodsDao" class="com.rescam.xhb.framework.dao.impl.GoodsDaoImpl">
+		<property name="sessionFactory">
+			<ref bean="sessionFactory" />
+		</property>
+	</bean>
+	<bean id="goodsService" class="com.rescam.xhb.framework.service.impl.GoodsServiceImpl">
+		<property name="Dao">
+			<ref bean="goodsDao" />
+		</property>
+		<property name="goodsDao">
+			<ref bean="goodsDao" />
+		</property>
+	</bean>
+	<!-- 商品 -->
+	
+	<!-- 购物车 -->
+	<bean id="shoppingCartDao" class="com.rescam.xhb.framework.dao.impl.ShoppingCartDaoImpl">
+		<property name="sessionFactory">
+			<ref bean="sessionFactory" />
+		</property>
+	</bean>
+	<bean id="shoppingCartService" class="com.rescam.xhb.framework.service.impl.ShoppingCartServiceImpl">
+		<property name="Dao">
+			<ref bean="shoppingCartDao" />
+		</property>
+		<property name="shoppingCartDao">
+			<ref bean="shoppingCartDao" />
+		</property>
+	</bean>
+	<!-- 购物车 -->
+	
+	<!-- 订单 -->
+	<bean id="orderDao" class="com.rescam.xhb.framework.dao.impl.OrderDaoImpl">
+		<property name="sessionFactory">
+			<ref bean="sessionFactory" />
+		</property>
+	</bean>
+	<bean id="orderService" class="com.rescam.xhb.framework.service.impl.OrderServiceImpl">
+		<property name="Dao">
+			<ref bean="orderDao" />
+		</property>
+		<property name="orderDao">
+			<ref bean="orderDao" />
+		</property>
+	</bean>
+	<!-- 订单 -->
+	
+	<!-- 客户配送地址 -->
+	<bean id="deliveryAddressDao" class="com.rescam.xhb.framework.dao.impl.DeliveryAddressDaoImpl">
+		<property name="sessionFactory">
+			<ref bean="sessionFactory" />
+		</property>
+	</bean>
+	<bean id="deliveryAddressService" class="com.rescam.xhb.framework.service.impl.DeliveryAddressServiceImpl">
+		<property name="Dao">
+			<ref bean="deliveryAddressDao" />
+		</property>
+		<property name="deliveryAddressDao">
+			<ref bean="deliveryAddressDao" />
+		</property>
+	</bean>
+	<!-- 客户配送地址 -->
+	
+	<!-- 订单批次 -->
+	<bean id="orderBatchDao" class="com.rescam.xhb.framework.dao.impl.OrderBatchDaoImpl">
+		<property name="sessionFactory">
+			<ref bean="sessionFactory" />
+		</property>
+	</bean>
+	<bean id="orderBatchService" class="com.rescam.xhb.framework.service.impl.OrderBatchServiceImpl">
+		<property name="Dao">
+			<ref bean="orderBatchDao" />
+		</property>
+		<property name="orderBatchDao">
+			<ref bean="orderBatchDao" />
+		</property>
+	</bean>
+	<!-- 订单批次 -->
+	
+	<!-- 商品优惠 -->
+	<bean id="goodsPreferentialDao" class="com.rescam.xhb.framework.dao.impl.GoodsPreferentialDaoImpl">
+		<property name="sessionFactory">
+			<ref bean="sessionFactory" />
+		</property>
+	</bean>
+	<bean id="goodsPreferentialService" class="com.rescam.xhb.framework.service.impl.GoodsPreferentialServiceImpl">
+		<property name="Dao">
+			<ref bean="goodsPreferentialDao" />
+		</property>
+		<property name="goodsPreferentialDao">
+			<ref bean="goodsPreferentialDao" />
+		</property>
+	</bean>
+	<!-- 商品优惠 -->
+	
+	<!-- 后台管理 -->
+	<!-- 后台用户 -->
+	<bean id="manageUserDao" class="com.rescam.xhb.framework.dao.impl.ManageUserDaoImpl">
+		<property name="sessionFactory">
+			<ref bean="sessionFactory" />
+		</property>
+	</bean>
+	<bean id="manageUserService" class="com.rescam.xhb.framework.service.impl.ManageUserServiceImpl">
+		<property name="Dao">
+			<ref bean="manageUserDao" />
+		</property>
+		<property name="manageUserDao">
+			<ref bean="manageUserDao" />
+		</property>
+	</bean>
+	<!-- 后台用户 -->
+	<!-- 供应商管理 -->
+	<bean id="supplierDao" class="com.rescam.xhb.framework.dao.impl.SupplierDaoImpl">
+		<property name="sessionFactory">
+			<ref bean="sessionFactory" />
+		</property>
+	</bean>
+	<bean id="supplierService" class="com.rescam.xhb.framework.service.impl.SupplierServiceImpl">
+		<property name="Dao">
+			<ref bean="supplierDao" />
+		</property>
+		<property name="supplierDao">
+			<ref bean="supplierDao" />
+		</property>
+	</bean>
+	<!-- 供应商管理 -->
+	
+</beans>

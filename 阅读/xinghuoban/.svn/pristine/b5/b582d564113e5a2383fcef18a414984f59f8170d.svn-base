@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="utf-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="
+            http://www.springframework.org/schema/beans
+            http://www.springframework.org/schema/beans/spring-beans-4.0.xsd">
+
+	<!-- Beans -->
+	<!-- 页面跳转 bean-->
+	<bean id="pageAction"
+		class="com.rescam.xhb.framework.action.PageAction" scope="prototype">
+	</bean>
+	
+	<!-- 登录/注册 bean-->
+	<bean id="initAction"
+		class="com.rescam.xhb.framework.action.CustomerAction" scope="prototype">
+		<property name="customerService">
+			<ref bean="customerSerivce" />
+		</property>
+		<property name="customerCardService">
+			<ref bean="customerCardSerivce" />
+		</property>
+	</bean>
+	
+	<!-- 商品目录 -->
+	<bean id="goodsCatalogAction"
+		class="com.rescam.xhb.framework.action.GoodsCatalogAction">
+		<property name="goodsCatalogService">
+			<ref bean="goodsCatalogSerivce" />
+		</property>
+	</bean>
+	 
+	<!-- 商品 -->
+	<bean id="goodsAction"
+		class="com.rescam.xhb.framework.action.GoodsAction">
+		<property name="goodsService">
+			<ref bean="goodsSerivce" />
+		</property>
+		<property name="goodsPreferentialService">
+			<ref bean="goodsPreferentialService" />
+		</property>
+	</bean>
+	
+	<!-- 购物车 -->
+	<bean id="shoppingCartAction"
+		class="com.rescam.xhb.framework.action.ShoppingCartAction">
+		<property name="shoppingCartService">
+			<ref bean="shoppingCartSerivce" />
+		</property>
+		<property name="goodsService">
+			<ref bean="goodsSerivce" />
+		</property>
+	</bean>
+	
+	<!-- 后台管理 -->
+	<bean id="manageUserAction"
+		class="com.rescam.xhb.framework.action.ManageUserAction">
+		<property name="manageUserService">
+			<ref bean="manageUserService" />
+		</property>
+	</bean>
+	
+</beans>

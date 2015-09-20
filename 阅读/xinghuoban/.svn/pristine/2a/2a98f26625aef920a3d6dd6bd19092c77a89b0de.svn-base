@@ -1,0 +1,75 @@
+package com.rescam.xhb.framework.action;
+
+import com.opensymphony.xwork2.ModelDriven;
+import com.rescam.xhb.common.action.BasicAction;
+import com.rescam.xhb.framework.entity.Order;
+import com.rescam.xhb.framework.service.GoodsService;
+import com.rescam.xhb.framework.service.OrderBatchService;
+import com.rescam.xhb.framework.service.OrderService;
+
+import net.sf.json.JSONObject;
+
+@SuppressWarnings("serial")
+public class OrderAction extends BasicAction implements ModelDriven<Order> {
+
+	private Order order = new Order();
+	private int page = 0;
+
+	public int getPage() {
+		return page;
+	}
+
+	public void setPage(int page) {
+		this.page = page;
+	}
+
+	public Order getOrder() {
+		return order;
+	}
+
+	public void setOrder(Order order) {
+		this.order = order;
+	}
+
+	@Override
+	public Order getModel() {
+		return order;
+	}
+
+	private JSONObject jsonObj;
+
+	public JSONObject getJsonObj() {
+		return jsonObj;
+	}
+
+	public void setJsonObj(JSONObject jsonObj) {
+		this.jsonObj = jsonObj;
+	}
+
+	private OrderService orderService;
+	private OrderBatchService orderBatchService;
+	private GoodsService goodsService;
+
+	public OrderService getOrderService() {
+		return orderService;
+	}
+	public void setOrderService(OrderService orderService) {
+		this.orderService = orderService;
+	}
+
+	public OrderBatchService getOrderBatchService() {
+		return orderBatchService;
+	}
+	public void setOrderBatchService(OrderBatchService orderBatchService) {
+		this.orderBatchService = orderBatchService;
+	}
+
+	public GoodsService getGoodsService() {
+		return goodsService;
+	}
+	public void setGoodsService(GoodsService goodsService) {
+		this.goodsService = goodsService;
+	}
+	
+
+}

@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<hibernate-mapping>
+    <class name="com.rescam.xhb.framework.entity.OrderBatch" table="order_batch" catalog="frid">
+        <id name="orderBatchId" type="java.lang.Integer">
+            <column name="order_batch_id" />
+            <generator class="identity" />
+        </id>
+        <property name="orderBatchCode" type="java.lang.String" >
+            <column name="order_batch_code" length="20">
+                <comment>批次编号</comment>
+            </column>
+        </property>
+        <property name="orderTotal" type="java.lang.Integer">
+            <column name="order_total">
+                <comment>订单总数</comment>
+            </column>
+        </property>
+        <property name="validOrderCount" type="java.lang.Integer">
+            <column name="valid_order_count">
+                <comment>有效订单数量</comment>
+            </column>
+        </property>
+        <property name="orderBatchStatus" type="java.lang.String">
+            <column name="order_batch_status" length="1">
+                <comment>状态</comment>
+            </column>
+        </property>
+    </class>
+</hibernate-mapping>

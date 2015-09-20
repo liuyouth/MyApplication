@@ -1,0 +1,84 @@
+package com.rescam.xhb.framework.service.impl;
+
+import java.util.List;
+import java.util.Map;
+
+import org.hibernate.HibernateException;
+
+import com.rescam.xhb.common.service.BasicServiceImpl;
+import com.rescam.xhb.framework.dao.OrderBatchDao;
+import com.rescam.xhb.framework.entity.OrderBatch;
+import com.rescam.xhb.framework.service.OrderBatchService;
+
+/**
+ * 订单批次service
+ * 
+ * @author xueyang
+ *
+ */
+public class OrderBatchServiceImpl extends BasicServiceImpl<OrderBatch>implements OrderBatchService {
+
+	private OrderBatchDao orderBatchDao;
+
+	public OrderBatchDao getOrderBatchDao() {
+		return orderBatchDao;
+	}
+
+	public void setOrderBatchDao(OrderBatchDao orderBatchDao) {
+		this.orderBatchDao = orderBatchDao;
+	}
+
+	@Override
+	public OrderBatch findById(Integer id) {
+		// TODO Auto-generated method stub
+		return super.findById(id);
+	}
+
+	@Override
+	public void saveEntity(OrderBatch entity) {
+		// TODO Auto-generated method stub
+		super.saveEntity(entity);
+	}
+
+	@Override
+	public void deleteEntity(OrderBatch entity) throws HibernateException {
+		super.deleteEntity(entity);
+	}
+
+	@Override
+	public void updateEntity(OrderBatch entity) throws HibernateException {
+		super.updateEntity(entity);
+	}
+
+	@SuppressWarnings("unchecked")
+	@Override
+	public List<OrderBatch> findByPage(String hql, int currentpage, int pageSize, Object... params) {
+		return super.findBySqlPage(hql, currentpage, pageSize, params);
+	}
+
+	@Override
+	public List<OrderBatch> findByPage(int currentpage, int pageSize) {
+		// TODO Auto-generated method stub
+		return super.findByPage(currentpage, pageSize);
+	}
+
+	@Override
+	public Integer getCount(String hql, List<Object> params) {
+		// TODO Auto-generated method stub
+		return super.getCount(hql, params);
+	}
+
+	@Override
+	public Integer getCount() {
+		// TODO Auto-generated method stub
+		return super.getCount();
+	}
+	
+	//根据批次号查批次详情
+	@Override
+	public Map<String ,Object> getOrderBatchByOrderBatchCode(String orderBatchCode){
+		Map<String ,Object> orderMap = orderBatchDao.getOrderBatchByOrderBatchCode(orderBatchCode);
+		
+		return orderMap;
+	}
+}

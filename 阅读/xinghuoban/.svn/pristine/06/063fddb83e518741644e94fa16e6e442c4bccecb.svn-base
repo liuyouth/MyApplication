@@ -1,0 +1,226 @@
+package com.rescam.xhb.framework.action;
+
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
+
+import org.apache.struts2.ServletActionContext;
+import org.hibernate.HibernateException;
+
+import com.opensymphony.xwork2.ModelDriven;
+import com.rescam.xhb.common.action.BasicAction;
+import com.rescam.xhb.common.util.MD5Utility;
+import com.rescam.xhb.framework.entity.AuthorityGroup;
+import com.rescam.xhb.framework.entity.ManageUser;
+import com.rescam.xhb.framework.entity.Supplier;
+import com.rescam.xhb.framework.pojo.SessionObj;
+import com.rescam.xhb.framework.service.ManageUserService;
+import com.rescam.xhb.framework.service.SupplierService;
+
+import net.sf.json.JSONObject;
+
+@SuppressWarnings("serial")
+public class SupplierAction extends BasicAction implements ModelDriven<Supplier> {
+	private SupplierService supplierService;
+	private Supplier supplier;
+	private JSONObject jsonObj;
+	private int page = 0;
+
+	public int getPage() {
+		return page;
+	}
+
+	public void setPage(int page) {
+		this.page = page;
+	}
+
+	
+
+	public SupplierService getSupplierService() {
+		return supplierService;
+	}
+
+	public void setSupplierService(SupplierService supplierService) {
+		this.supplierService = supplierService;
+	}
+
+	public Supplier getSupplier() {
+		return supplier;
+	}
+
+	public void setSupplier(Supplier supplier) {
+		this.supplier = supplier;
+	}
+
+	public JSONObject getJsonObj() {
+		return jsonObj;
+	}
+
+	public void setJsonObj(JSONObject jsonObj) {
+		this.jsonObj = jsonObj;
+	}
+
+	@Override
+	public Supplier getModel() {
+		return supplier;
+	}
+
+	/**
+	 * 跳转到后台用户登录页面
+	 * 
+	 * @return
+	 */
+	public String toLoginUserPage() {
+		return "login";
+	}
+
+
+	/**
+	 * 登录成功后跳转页面
+	 * 
+	 * @return
+	 */
+	public String toSupplierIndexPage() {
+		return "supplier";
+	}
+
+	/**
+	 * 加载后台用户
+	 * 
+	 * @return
+	 */
+	public String getAllSupplier() {
+		
+		jsonObj = new JSONObject();
+		int count = supplierService.getAllSupplierTotal(supplier);
+		List<Supplier> list = supplierService.getAllSupplier(supplier, page);
+		Map<String, Object> jsonMap = new HashMap<String, Object>();
+		jsonMap.put("total", count);
+		jsonMap.put("supplierList", list);
+		jsonObj = JSONObject.fromObject(jsonMap);
+		return SUCCESS;
+	}
+	/**
+	 * 添加用户
+	 * @return
+	 */
+	public String addSupplier(){
+		supplier.setSupplierStatus("1");
+		String pwd=MD5Utility.encrypt("123456");//默认密码
+		supplier.setSupplierPassword(pwd);
+		jsonObj = new JSONObject();
+		jsonObj.put("result", false);
+		try {
+			supplierService.saveEntity(supplier);
+			jsonObj.put("result", true);
+		} catch (HibernateException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return SUCCESS;
+	}
+	/**
+	 * 获取用户详情
+	 * @return
+	 */
+	public String getSupplierInfo(){
+		supplier=supplierService.findById(supplier.getSupplierId());
+		Map<String, Object> jsonMap = new HashMap<String, Object>();
+		jsonMap.put("supplier", supplier);
+		jsonObj = JSONObject.fromObject(jsonMap);
+		return SUCCESS;
+	}
+	/**
+	 * 修改用户信息
+	 * @return
+	 */
+	public String updateSupplier(){
+		jsonObj = new JSONObject();
+		jsonObj.put("result", false);
+		try {
+			supplierService.updateEntity(supplier);
+			jsonObj.put("result", true);
+		} catch (HibernateException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return SUCCESS;
+	}
+	/**
+	 * 删除用户信息
+	 * @return
+	 */
+	public String delSupplier(){
+		jsonObj = new JSONObject();
+		jsonObj.put("result", false);
+		try {
+			supplierService.saveOrUpdateBySql("update manage_user set manage_user_status='0' where manage_user_id="+supplier.getSupplierId());
+			jsonObj.put("result", true);
+		} catch (HibernateException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return SUCCESS;
+	}
+//	/**
+//	 * 获取所有权限字典
+//	 * @return
+//	 */
+//	public String getAllAuthorityGroup(){
+//		jsonObj = new JSONObject();
+//		List<AuthorityGroup> list=new ArrayList() ;
+//		try {
+//			list=(List<AuthorityGroup>)manageUserService.findBySql("select * from authority_group");
+//		} catch (HibernateException e) {
+//			// TODO Auto-generated catch block
+//			e.printStackTrace();
+//		}
+//		Map<String, Object> jsonMap = new HashMap<String, Object>();
+//		jsonMap.put("authorityGroupList", list);
+//		jsonObj = JSONObject.fromObject(jsonMap);
+//		return SUCCESS;
+//	}
+	/**
+	 * 修改密码
+	 * @return
+	 */
+	public String updatePwd(){
+		jsonObj = new JSONObject();
+		jsonObj.put("result", false);
+		String pwd="";
+		HttpServletRequest request = ServletActionContext.getRequest();
+		int type=Integer.valueOf(request.getParameter("pwdType"));
+		if(type==1){
+			pwd=MD5Utility.encrypt("123456");//默认密码
+		}else{
+			pwd=MD5Utility.encrypt(supplier.getSupplierPassword());
+		}
+		try {
+			supplierService.saveOrUpdateBySql("update manage_user set manage_user_password='"
+							+pwd+"' where manage_user_id="+supplier.getSupplierId());
+			jsonObj.put("result", true);
+		} catch (HibernateException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return SUCCESS;
+	}
+
+//	/**
+//	 * 退出
+//	 * @return
+//	 */
+//	public String logout(){
+//		HttpServletRequest request = ServletActionContext.getRequest();
+//		HttpSession session = request.getSession();
+//		SessionObj se=new SessionObj();
+//		se.setManageUserId(null);
+//		se.setManageUserName(null);
+//		session.removeAttribute("se");
+//		return "login";
+//	}
+}

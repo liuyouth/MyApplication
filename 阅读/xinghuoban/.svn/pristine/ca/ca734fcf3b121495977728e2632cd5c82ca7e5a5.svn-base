@@ -1,0 +1,149 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE struts PUBLIC
+	"-//Apache Software Foundation//DTD Struts Configuration 2.3//EN"
+	"http://struts.apache.org/dtds/struts-2.3.dtd">
+
+<struts>
+    <constant name="struts.enable.DynamicMethodInvocation" value="true" />
+    <constant name="struts.devMode" value="false" />
+    <!-- <constant name="struts.custom.i18n.resources" value="resource"/> -->
+    <constant name="struts.i18n.encoding" value="UTF-8" />
+    <constant name="struts.action.extension" value="html" />
+    <constant name="struts.serve.static.browserCache" value="false" />
+    <constant name="struts.multipart.maxSize" value="524288000" />
+    <package name="default" extends="struts-default,json-default">
+
+        <global-results>
+            <result name="error">/WEB-INF/pages/error.jsp</result>
+        </global-results>
+
+        <global-exception-mappings>
+            <exception-mapping exception="java.lang.Exception" result="error" />
+        </global-exception-mappings>
+
+        <!-- Actions -->
+        <!-- 页面跳转 -->
+        <action name="page_*" class="pageAction" method="{1}">
+			<result name="travelGoodsList" type="dispatcher">
+				/WEB-INF/pages/travelGoodsList.jsp
+			</result>
+			<result name="travelGoodsDetail" type="dispatcher">
+				/WEB-INF/pages/travelGoodsDetail.jsp?goodsId=${goodsId}
+			</result>
+			<result name="serviceGoodsList" type="dispatcher">
+				/WEB-INF/pages/serviceGoodsList.jsp
+			</result>
+			<result name="serviceGoodsDetail" type="dispatcher">
+				/WEB-INF/pages/serviceGoodsDetail.jsp
+			</result>
+			<result name="goodsList" type="dispatcher">
+				/WEB-INF/pages/goodsList.jsp
+			</result>
+			<result name="goodsDetail" type="dispatcher">
+				/WEB-INF/pages/goodsDetail.jsp
+			</result>
+			<result name="shoppingCart" type="dispatcher">
+				/WEB-INF/pages/shoppingCart.jsp
+			</result>
+			<result name="manageGoodsList" type="dispatcher">
+				/WEB-INF/pages/manage/manageGoods/goodsIndex.jsp
+			</result>
+			<result name="addGoods" type="dispatcher">
+				/WEB-INF/pages/manage/manageGoods/addGoods.jsp
+			</result>
+			<result name="toAddSupplier" type="dispatcher">
+			    /WEB-INF/pages/manage/supplier/addSupplier.jsp
+			</result>
+			<result name="submitOrder" type="dispatcher">
+			    /WEB-INF/pages/submitOrder.jsp?goodsIds=${goodsIds}&amp;goodsNums=${goodsNums}&amp;totalPrice=${totalPrice}
+			</result>
+		</action>
+		<!-- 页面跳转 -->
+		
+        <!-- 登录/注册 -->
+        <action name="customer_*" class="initAction" method="{1}">
+            <result name="wx" type="redirect">
+				https://open.weixin.qq.com/connect/oauth2/authorize?appid=${appId}&amp;redirect_uri=http%3a%2f%2fwww.bdtrace.com%2fxinghuoban%2fcustomer_init.html%3fopenId%3dopenId&amp;response_type=code&amp;scope=snsapi_base&amp;state=header#wechat_redirect
+				<!--https://open.weixin.qq.com/connect/oauth2/authorize?appid=${appId}&amp;redirect_uri=http%3a%2f%2fwww.bdtrace.com%2fxinghuoban%2fcustomer_init.html%3fopenId%3dopenId&amp;response_type=code&amp;scope=snsapi_userinfo&amp;state=header#wechat_redirect
+				  -->
+			</result>
+			<result name="init" type="dispatcher">
+				/WEB-INF/pages/index.jsp
+			</result>
+			<result name="goodsList" type="dispatcher">
+				/WEB-INF/pages/travelGoodsList.jsp
+			</result>
+			<result type="json">
+				<param name="root">jsonObj</param>
+			</result>
+		</action>
+
+        <!-- 商品目录 -->
+        <action name="catalog_*" class="goodsCatalogAction" method="{1}">
+			<result type="json">
+				<param name="root">jsonObj</param>
+			</result>
+		</action>
+		<!-- 商品目录 -->
+		
+		<!-- 商品 -->
+        <action name="goods_*" class="goodsAction" method="{1}">
+			<result type="json">
+				<param name="root">jsonObj</param>
+			</result>
+		</action>
+		<!-- 商品 -->
+		
+        <!-- 购物车 -->
+        <action name="shoppingCart_*" class="shoppingCartAction" method="{1}">
+			<result type="json">
+				<param name="root">jsonObj</param>
+			</result>
+		</action>
+		<!-- 购物车 -->
+		
+		<!-- 订单 -->
+        <action name="order_*" class="orderAction" method="{1}">
+			<result type="json">
+				<param name="root">jsonObj</param>
+			</result>
+		</action>
+		<!-- 订单 -->
+		
+		<!-- 客户配送地址 -->
+        <action name="deliveryAddress_*" class="deliveryAddressAction" method="{1}">
+			<result type="json">
+				<param name="root">jsonObj</param>
+			</result>
+		</action>
+		<!-- 客户配送地址 -->
+		
+		<!-- 后台管理 -->
+        <!-- 后台用户管理 -->
+        <action name="manageUser_*" class="manageUserAction" method="{1}">
+            <result type="json">
+				<param name="root">jsonObj</param>
+			</result>
+			<result name="login" type="dispatcher">
+				/WEB-INF/pages/manage/login.jsp
+			</result>
+			<result name="manageUserIndex" type="dispatcher">
+				/WEB-INF/pages/manage/manageUser/manageUserIndex.jsp
+			</result>
+		</action>
+		<!-- 供应商管理 -->
+		<action name="supplier_*" class="supplierAction" method="{1}">
+            <result type="json">
+				<param name="root">jsonObj</param>
+			</result>
+			<result name="supplier" type="dispatcher">
+				/WEB-INF/pages/manage/supplier/supplierIndex.jsp
+			</result>
+			<result name="addSupplier" type="dispatcher">
+				/WEB-INF/pages/manage/supplier/addSupplier.jsp
+			</result>
+		</action>
+		<!-- 供应商管理 -->
+		
+	</package>
+</struts>

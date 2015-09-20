@@ -1,0 +1,138 @@
+package com.rescam.xhb.framework.action;
+
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
+import com.opensymphony.xwork2.ModelDriven;
+import com.rescam.xhb.common.action.BasicAction;
+import com.rescam.xhb.framework.entity.Goods;
+import com.rescam.xhb.framework.service.GoodsPreferentialService;
+import com.rescam.xhb.framework.service.GoodsService;
+
+import net.sf.json.JSONObject;
+
+@SuppressWarnings("serial")
+public class GoodsAction extends BasicAction implements ModelDriven<Goods> {
+
+	private Goods goods = new Goods();
+	private int page = 0;
+
+	public int getPage() {
+		return page;
+	}
+
+	public void setPage(int page) {
+		this.page = page;
+	}
+
+	public Goods getGoods() {
+		return goods;
+	}
+
+	public void setGoods(Goods goods) {
+		this.goods = goods;
+	}
+
+	@Override
+	public Goods getModel() {
+		return goods;
+	}
+
+	private JSONObject jsonObj;
+
+	public JSONObject getJsonObj() {
+		return jsonObj;
+	}
+
+	public void setJsonObj(JSONObject jsonObj) {
+		this.jsonObj = jsonObj;
+	}
+
+	private GoodsService goodsService;
+	private GoodsPreferentialService goodsPreferentialService;
+
+	public GoodsService getGoodsService() {
+		return goodsService;
+	}
+
+	public void setGoodsService(GoodsService goodsService) {
+		this.goodsService = goodsService;
+	}
+
+	public GoodsPreferentialService getGoodsPreferentialService() {
+		return goodsPreferentialService;
+	}
+
+	public void setGoodsPreferentialService(GoodsPreferentialService goodsPreferentialService) {
+		this.goodsPreferentialService = goodsPreferentialService;
+	}
+
+	/**
+	 * 按照商品种类、销售状态查询商品列表
+	 * 
+	 * @return
+	 */
+	@SuppressWarnings({ "rawtypes", "unchecked" })
+	public String findGoodsListByTypeAndStatus() {
+		// 取当前条件的所有商品总数
+		int total = goodsService.getGoodsTotalByTypeAndStatus(goods.getGoodsType(), goods.getGoodsSalesStatus(),
+				goods.getGoodsCatalogId());
+
+		// 取当前页面商品列表数据
+		List list = goodsService.findGoodsListByTypeAndStatus(goods.getGoodsType(), goods.getGoodsSalesStatus(),
+				goods.getGoodsCatalogId(), page);
+
+		List<Map<String, Object>> returnList = new ArrayList<Map<String, Object>>();
+		// 取商品打折信息
+		for (int i = 0; i < list.size(); i++) {
+			Map<String, Object> dataMap = new HashMap<String, Object>();
+			dataMap = (Map<String, Object>) list.get(i);
+			int goodsId = (int) dataMap.get("goodsId");
+			Map<String, Object> preferentialMap = goodsPreferentialService.getGoodsPreferentialDetailById(goodsId);
+			if(null == preferentialMap){
+				dataMap.put("goodsPreferentialId", null);
+				dataMap.put("preferentialType", null);
+				dataMap.put("discount", null);
+				dataMap.put("groupPrice", null);
+				dataMap.put("goodsPreferentialStatus", null);
+			}else{
+				dataMap.put("goodsPreferentialId", preferentialMap.get("goodsPreferentialId"));
+				dataMap.put("preferentialType", preferentialMap.get("preferentialType"));
+				dataMap.put("discount", preferentialMap.get("discount"));
+				dataMap.put("groupPrice", preferentialMap.get("groupPrice"));
+				dataMap.put("goodsPreferentialStatus", preferentialMap.get("goodsPreferentialStatus"));
+			}
+			returnList.add(dataMap);
+		}
+
+		Map<String, Object> jsonMap = new HashMap<String, Object>();
+		jsonMap.put("total", total);
+		jsonMap.put("goodsList", returnList);
+		jsonObj = JSONObject.fromObject(jsonMap);
+
+		return SUCCESS;
+	}
+
+	/**
+	 * 按照商品id、商品种类查询商品详情
+	 * 
+	 * @return
+	 */
+	public String getGoodsDetailByIdAndType() {
+
+		// 取当前商品详情数据
+		Map<String, Object> detailData = goodsService.getGoodsDetailById(goods.getGoodsId());// (商品id)
+
+		// 取当前商品关联图片的详情数据（商品信息详情展示使用）
+		List<Map<String, Object>> imageListData = goodsService.getGoodsImageListByIdAndType(goods.getGoodsId(), "1");// (商品id，商品图片状态)
+
+		Map<String, Object> jsonMap = new HashMap<String, Object>();
+		jsonMap.put("goodsImageList", imageListData);
+		jsonMap.put("goodsDetail", detailData);
+		jsonObj = JSONObject.fromObject(jsonMap);
+
+		return SUCCESS;
+	}
+}

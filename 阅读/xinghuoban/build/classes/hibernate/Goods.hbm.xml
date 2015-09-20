@@ -5,7 +5,7 @@
     <class name="com.rescam.xhb.framework.entity.Goods" table="goods" catalog="frid">
         <id name="goodsId" type="java.lang.Integer">
             <column name="goods_id" />
-            <generator class="assigned" />
+            <generator class="identity" />
         </id>
         <property name="supplierId" type="java.lang.Integer" >
             <column name="supplier_id">

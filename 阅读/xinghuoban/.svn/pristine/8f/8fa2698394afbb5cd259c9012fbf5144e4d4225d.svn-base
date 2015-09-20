@@ -1,0 +1,12 @@
+package com.rescam.xhb.framework.service;
+
+import java.util.Map;
+
+import com.rescam.xhb.common.service.BasicService;
+import com.rescam.xhb.framework.entity.OrderBatch;
+
+public interface OrderBatchService extends BasicService<OrderBatch> {
+
+	//根据批次号查批次详情
+	public Map<String ,Object> getOrderBatchByOrderBatchCode(String orderBatchCode);
+}

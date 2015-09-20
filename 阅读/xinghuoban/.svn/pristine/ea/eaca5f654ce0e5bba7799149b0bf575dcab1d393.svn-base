@@ -1,0 +1,276 @@
+package com.rescam.xhb.framework.action;
+
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
+
+import net.sf.json.JSONObject;
+
+import org.apache.struts2.ServletActionContext;
+import org.hibernate.HibernateException;
+
+import com.opensymphony.xwork2.ModelDriven;
+import com.rescam.xhb.common.action.BasicAction;
+import com.rescam.xhb.common.util.MD5Utility;
+import com.rescam.xhb.framework.entity.Supplier;
+import com.rescam.xhb.framework.pojo.SessionObj;
+import com.rescam.xhb.framework.service.SupplierService;
+
+@SuppressWarnings("serial")
+public class SupplierAction extends BasicAction implements
+		ModelDriven<Supplier> {
+	private SupplierService supplierService;
+	private Supplier supplier;
+	private JSONObject jsonObj;
+	private int page = 0;
+	private String isAdd;
+
+	public String getIsAdd() {
+		return isAdd;
+	}
+
+	public void setIsAdd(String isAdd) {
+		this.isAdd = isAdd;
+	}
+
+	public int getPage() {
+		return page;
+	}
+
+	public void setPage(int page) {
+		this.page = page;
+	}
+
+	public SupplierService getSupplierService() {
+		return supplierService;
+	}
+
+	public void setSupplierService(SupplierService supplierService) {
+		this.supplierService = supplierService;
+	}
+
+	public Supplier getSupplier() {
+		return supplier;
+	}
+
+	public void setSupplier(Supplier supplier) {
+		this.supplier = supplier;
+	}
+
+	public JSONObject getJsonObj() {
+		return jsonObj;
+	}
+
+	public void setJsonObj(JSONObject jsonObj) {
+		this.jsonObj = jsonObj;
+	}
+
+	@Override
+	public Supplier getModel() {
+		return supplier;
+	}
+
+	/**
+	 * 跳转管理供应商页面
+	 * 
+	 * @return
+	 */
+	public String toSupplierIndexPage() {
+		return "supplier";
+	}
+
+	/**
+	 * 跳转供应商管理页面
+	 * 
+	 * @return
+	 */
+	public String toSupplierAdmin() {
+		return "supplierAdmin";
+	}
+
+	/**
+	 * 跳转供应商管理登录页面
+	 * 
+	 * @return
+	 */
+	public String toLogin() {
+		return "supplierLogin";
+	}
+
+	/**
+	 * 跳转添加供应商/修改供应商
+	 * 
+	 * @return
+	 */
+	public String toAddSupplier() {
+
+		return "addSupplier";
+	}
+
+	/**
+	 * 加载供应商数据
+	 * 
+	 * @return
+	 */
+	public String getAllSupplier() {
+
+		jsonObj = new JSONObject();
+		int count = supplierService.getAllSupplierTotal(supplier);
+		List<Supplier> list = supplierService.getAllSupplier(supplier, page);
+		Map<String, Object> jsonMap = new HashMap<String, Object>();
+		jsonMap.put("total", count);
+		jsonMap.put("supplierList", list);
+		jsonObj = JSONObject.fromObject(jsonMap);
+		return SUCCESS;
+	}
+
+	/**
+	 * 添加供应商
+	 * 
+	 * @return
+	 */
+	public String addSupplier() {
+
+		jsonObj = new JSONObject();
+		List list = new ArrayList<Supplier>();
+		list = supplierService.findByAccount(supplier.getSupplierAccount());
+		if (list == null || list.size() == 0) {
+
+			supplier.setSupplierStatus("1");
+			String pwd = MD5Utility.encrypt("123456");// 默认密码
+			supplier.setSupplierPassword(pwd);
+			jsonObj.put("result", false);
+			try {
+				supplierService.saveEntity(supplier);
+				jsonObj.put("result", true);
+			} catch (HibernateException e) {
+				e.printStackTrace();
+			}
+		} else {
+
+			jsonObj.put("result", false);
+		}
+		return SUCCESS;
+
+	}
+
+	/**
+	 * 获取供应商详情
+	 * 
+	 * @return
+	 */
+	public String getSupplierInfo() {
+		jsonObj = new JSONObject();
+		supplier = supplierService.findById(supplier.getSupplierId());
+		jsonObj.put("result", supplier);
+		return SUCCESS;
+	}
+
+	/**
+	 * 修改供应商信息
+	 * 
+	 * @return
+	 */
+	public String updateSupplier() {
+		jsonObj = new JSONObject();
+		jsonObj.put("result", false);
+		try {
+			supplierService.updateEntity(supplier);
+			jsonObj.put("result", true);
+		} catch (HibernateException e) {
+			e.printStackTrace();
+		}
+		return SUCCESS;
+	}
+
+	/**
+	 * 修改供应商密码
+	 * 
+	 * @return
+	 */
+	public String updateSupplierPassword() {
+		jsonObj = new JSONObject();
+		jsonObj.put("result", false);
+		String psw = MD5Utility.encrypt("123456");
+		try {
+			supplierService
+					.saveOrUpdateBySql("update supplier set supplier_password='"
+							+ psw
+							+ "' where supplier_id="
+							+ supplier.getSupplierId());
+			jsonObj.put("result", true);
+		} catch (HibernateException e) {
+			e.printStackTrace();
+		}
+		return SUCCESS;
+	}
+
+	/**
+	 * 删除供应商信息
+	 * 
+	 * @return
+	 */
+	public String delSupplier() {
+		jsonObj = new JSONObject();
+		jsonObj.put("result", false);
+		try {
+			supplierService
+					.saveOrUpdateBySql("update supplier set supplier_status='0' where supplier_id="
+							+ supplier.getSupplierId());
+			jsonObj.put("result", true);
+		} catch (HibernateException e) {
+			e.printStackTrace();
+		}
+		return SUCCESS;
+	}
+
+	/**
+	 * 获取所有供应商字典
+	 * 
+	 * @return
+	 */
+	@SuppressWarnings("unchecked")
+	public String getSupplierKV() {
+		List<Supplier> list = new ArrayList<Supplier>();
+		try {
+			list = (List<Supplier>) supplierService
+					.findBySql("select * from supplier");
+		} catch (HibernateException e) {
+			e.printStackTrace();
+		}
+		Map<String, Object> jsonMap = new HashMap<String, Object>();
+		jsonMap.put("supplierList", list);
+		jsonObj = JSONObject.fromObject(jsonMap);
+		return SUCCESS;
+	}
+
+	/**
+	 * 供应商登录
+	 * 
+	 * @return
+	 */
+	public String loginSupplier() {
+		jsonObj = new JSONObject();
+		List<Supplier> list = supplierService.supplierLogin(supplier);
+		if (list == null || list.size() == 0) {
+			jsonObj.put("result", false);
+		} else {
+			Supplier supplier1 = list.get(0);
+			HttpServletRequest request = ServletActionContext.getRequest();
+			HttpSession session = request.getSession();
+			SessionObj se = new SessionObj();
+			se.setSupplierId(supplier1.getSupplierId());
+			se.setSupplierName(supplier1.getSupplierName());
+			se.setSupplierAccount(supplier1.getSupplierAccount());
+			session.setAttribute("se", se);
+			jsonObj.put("result", true);
+		}
+
+		return SUCCESS;
+	}
+
+}

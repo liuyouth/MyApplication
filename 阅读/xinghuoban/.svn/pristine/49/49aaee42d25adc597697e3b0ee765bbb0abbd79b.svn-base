@@ -1,0 +1,59 @@
+package com.rescam.xhb.framework.dao.impl;
+
+import java.util.List;
+
+import org.hibernate.HibernateException;
+
+import com.rescam.xhb.common.dao.BasicDaoImpl;
+import com.rescam.xhb.framework.dao.OrderBatchDao;
+import com.rescam.xhb.framework.entity.OrderBatch;
+
+/**
+ * 商品DAO实现
+ * 
+ * @author xueyang
+ * 
+ */
+public class OrderBatchDaoImpl extends BasicDaoImpl<OrderBatch>implements OrderBatchDao {
+
+	@Override
+	public OrderBatch findById(Integer id) throws HibernateException {
+		return super.findById(id);
+	}
+
+	@Override
+	public void saveEntity(OrderBatch entity) throws HibernateException {
+		super.saveEntity(entity);
+	}
+
+	@Override
+	public void deleteEntity(OrderBatch entity) throws HibernateException {
+		super.deleteEntity(entity);
+	}
+
+	@Override
+	public void updateEntity(OrderBatch entity) throws HibernateException {
+		super.updateEntity(entity);
+	}
+
+	@Override
+	public List<OrderBatch> findByPage(String hql, int currentpage, int pageSize, Object... params) {
+		return super.findByPage(hql, currentpage, pageSize, params);
+	}
+
+	@Override
+	public List<OrderBatch> findByPage(int currentpage, int pageSize) {
+		return super.findByPage(currentpage, pageSize);
+	}
+
+	@Override
+	public Integer getCount(String hql, Object... params) {
+		return super.getCount(hql, params);
+	}
+
+	@Override
+	public Integer getCount() {
+		return super.getCount();
+	}
+
+}

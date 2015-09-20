@@ -1,0 +1,8 @@
+package com.rescam.xhb.framework.dao;
+
+import com.rescam.xhb.common.dao.BasicDao;
+import com.rescam.xhb.framework.entity.OrderBatch;
+
+public interface OrderBatchDao extends BasicDao<OrderBatch> {
+	
+}

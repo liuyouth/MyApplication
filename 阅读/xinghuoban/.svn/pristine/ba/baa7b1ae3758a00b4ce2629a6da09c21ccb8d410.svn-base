@@ -1,0 +1,47 @@
+package com.rescam.xhb.framework.action;
+
+import com.opensymphony.xwork2.ModelDriven;
+import com.rescam.xhb.common.action.BasicAction;
+import com.rescam.xhb.framework.entity.DeliveryAddress;
+import com.rescam.xhb.framework.service.DeliveryAddressService;
+
+import net.sf.json.JSONObject;
+
+@SuppressWarnings("serial")
+public class DeliveryAddressAction extends BasicAction implements ModelDriven<DeliveryAddress> {
+
+	private DeliveryAddress deliveryAddress = new DeliveryAddress();
+
+	public DeliveryAddress getDeliveryAddress() {
+		return deliveryAddress;
+	}
+	public void setDeliveryAddress(DeliveryAddress deliveryAddress) {
+		this.deliveryAddress = deliveryAddress;
+	}
+
+	@Override
+	public DeliveryAddress getModel() {
+		return deliveryAddress;
+	}
+
+	private JSONObject jsonObj;
+
+	public JSONObject getJsonObj() {
+		return jsonObj;
+	}
+
+	public void setJsonObj(JSONObject jsonObj) {
+		this.jsonObj = jsonObj;
+	}
+
+	private DeliveryAddressService deliveryAddressService;
+	
+	
+	public DeliveryAddressService getDeliveryAddressService() {
+		return deliveryAddressService;
+	}
+	public void setDeliveryAddressService(DeliveryAddressService deliveryAddressService) {
+		this.deliveryAddressService = deliveryAddressService;
+	}
+	
+}

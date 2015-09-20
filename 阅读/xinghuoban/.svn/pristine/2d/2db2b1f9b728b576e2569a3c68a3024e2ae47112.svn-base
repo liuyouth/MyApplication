@@ -1,0 +1,87 @@
+<?xml version="1.0" encoding="utf-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="
+            http://www.springframework.org/schema/beans
+            http://www.springframework.org/schema/beans/spring-beans-4.0.xsd">
+
+	<!-- Beans -->
+	<!-- 页面跳转 bean-->
+	<bean id="pageAction"
+		class="com.rescam.xhb.framework.action.PageAction" scope="prototype">
+	</bean>
+	
+	<!-- 登录/注册 bean-->
+	<bean id="initAction"
+		class="com.rescam.xhb.framework.action.CustomerAction" scope="prototype">
+		<property name="customerService">
+			<ref bean="customerService" />
+		</property>
+		<property name="customerCardService">
+			<ref bean="customerCardService" />
+		</property>
+	</bean>
+	
+	<!-- 商品目录 -->
+	<bean id="goodsCatalogAction"
+		class="com.rescam.xhb.framework.action.GoodsCatalogAction">
+		<property name="goodsCatalogService">
+			<ref bean="goodsCatalogService" />
+		</property>
+	</bean>
+	 
+	<!-- 商品 -->
+	<bean id="goodsAction"
+		class="com.rescam.xhb.framework.action.GoodsAction">
+		<property name="goodsService">
+			<ref bean="goodsService" />
+		</property>
+		<property name="goodsPreferentialService">
+			<ref bean="goodsPreferentialService" />
+		</property>
+	</bean>
+	
+	<!-- 购物车 -->
+	<bean id="shoppingCartAction"
+		class="com.rescam.xhb.framework.action.ShoppingCartAction">
+		<property name="shoppingCartService">
+			<ref bean="shoppingCartService" />
+		</property>
+		<property name="goodsService">
+			<ref bean="goodsService" />
+		</property>
+		<property name="goodsPreferentialService">
+			<ref bean="goodsPreferentialService" />
+		</property>
+	</bean>
+	
+	<!-- 订单 -->
+	<bean id="orderAction"
+		class="com.rescam.xhb.framework.action.OrderAction">
+		<property name="orderService">
+			<ref bean="orderService" />
+		</property>
+		<property name="orderBatchService">
+			<ref bean="orderBatchService" />
+		</property>
+		<property name="goodsService">
+			<ref bean="goodsService" />
+		</property>
+	</bean>
+	
+	<!-- 后台管理 -->
+	<bean id="manageUserAction"
+		class="com.rescam.xhb.framework.action.ManageUserAction">
+		<property name="manageUserService">
+			<ref bean="manageUserService" />
+		</property>
+	</bean>
+	<!--供应商管理 -->
+	<bean id="supplierAction"
+		class="com.rescam.xhb.framework.action.SupplierAction">
+		<property name="supplierService">
+			<ref bean="supplierService" />
+		</property>
+	</bean>
+	
+</beans>

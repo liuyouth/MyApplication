@@ -1,0 +1,15 @@
+package com.rescam.xhb.framework.dao;
+
+import java.util.List;
+import java.util.Map;
+
+import com.rescam.xhb.common.dao.BasicDao;
+import com.rescam.xhb.framework.entity.OrderBatch;
+
+public interface OrderBatchDao extends BasicDao<OrderBatch> {
+	// 根据批次号查批次详情
+	public Map<String, Object> getOrderBatchByOrderBatchCode(String orderBatchCode);
+
+	// 根据客户id查订单批次列表
+	public List<Map<String, Object>> getOrderBatchListByCustomerIdAndStatus(int customerId, String orderBatchStatus);
+}
